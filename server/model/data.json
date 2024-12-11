@@ -1,0 +1,69 @@
+{
+  "code_shares": [
+    {
+      "id": "1",
+      "title": "JavaScript基础教程",
+      "code_snippets": [
+        {
+          "title": "函数声明",
+          "language": "JavaScript",
+          "code": "function hello() { console.log('Hello, world!'); }"
+        },
+        {
+          "title": "函数声明2",
+          "language": "JavaScript",
+          "code": "function hello() { console.log('Hello, world!'); }"
+        }
+      ],
+      "description": "这是一个关于 JavaScript 的基础教程。",
+      "tags": [
+        "JavaScript",
+        "基础"
+      ],
+      "created_at": 1702118400000,
+      "expire_at": 1733654400000,
+      "accessibility": "public",
+      "password": null
+    },
+    {
+      "id": "2",
+      "title": "Node.js高级教程",
+      "code_snippets": [
+        {
+          "title": "异步编程",
+          "language": "JavaScript",
+          "code": "async function example() { await somethingAsync(); }"
+        }
+      ],
+      "description": "Node.js 高级编程技巧。",
+      "tags": [
+        "Node.js",
+        "高级"
+      ],
+      "created_at": 1702117502766,
+      "expire_at": null,
+      "accessibility": "public",
+      "password": null
+    },
+    {
+      "id": "3",
+      "title": "Node.js高级教程",
+      "code_snippets": [
+        {
+          "title": "异步编程",
+          "language": "JavaScript",
+          "code": "async function example() { await somethingAsync(); }"
+        }
+      ],
+      "description": "Node.js 高级编程技巧。",
+      "tags": [
+        "Node.js",
+        "高级"
+      ],
+      "created_at": 1702117620890,
+      "expire_at": null,
+      "accessibility": "public",
+      "password": null
+    }
+  ]
+}
