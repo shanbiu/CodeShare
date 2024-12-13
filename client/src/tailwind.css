@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+div.ant-tabs-nav {
+width: 80%;
+   margin: 0 0 0 0 !important;
+  }
+.ant-card{
+    border-radius:   0 8px 8px 8px
+}
+.ant-select-multiple .ant-select-selector {
+    border-radius:   0 6px 6px 0px
+}

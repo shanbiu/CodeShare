@@ -11,9 +11,12 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.2",
+    "@monaco-editor/react": "^4.6.0",
     "@types/antd": "^1.0.4",
+    "@types/markdown-it": "^14.1.2",
     "antd": "^5.22.4",
     "intd": "^0.1.4",
+    "markdown-it": "^14.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
