@@ -1,4 +1,3 @@
-const tagsService = require('../service/tag');
 const dataService = require('../service/data.js');
 
 /**

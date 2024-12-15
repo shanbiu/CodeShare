@@ -11,3 +11,6 @@ width: 80%;
 .ant-select-multiple .ant-select-selector {
     border-radius:   0 6px 6px 0px
 }
+.ant-collapse-content-box {
+    padding: 0 !important;
+}

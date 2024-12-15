@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button"
-import { Plus } from 'lucide-react'
+import React from "react";
+
 
 interface Tab {
   title: string;
@@ -21,18 +21,7 @@ export function CodeSnippetTabs({
 }: CodeSnippetTabsProps) {
   return (
     <div className="flex items-center space-x-2 mb-4">
-      {tabs.map((tab, index) => (
-        <Button
-          key={index}
-          variant={activeTab === index ? "default" : "outline"}
-          onClick={() => setActiveTab(index)}
-        >
-          {tab.title}
-        </Button>
-      ))}
-      <Button variant="outline" size="icon" onClick={onAddTab}>
-        <Plus className="h-4 w-4" />
-      </Button>
+
     </div>
   )
 }

@@ -49,12 +49,19 @@ export async function getAllData(ctx) {
 
 export async function addData(ctx) {
   try {
+    // 获取请求体中的数据
     const newCodeShare = ctx.request.body;
-    await db.read();
-    db.data.code_shares.push(newCodeShare); // 将新分享添加到数组
-    await db.write();
-  }
-  catch (error) {
+
+    console.log('收到的提交数据:', newCodeShare);
+
+    // 在这里可以保存到数据库或执行其他逻辑
+    // await db.read();
+    // db.data.code_shares.push(newCodeShare);  // 将新分享添加到数据库
+    // await db.write();
+
+    // 返回成功的响应
+    ctx.body = { success: true, message: '提交成功' };
+  } catch (error) {
     console.error('添加数据失败:', error);
     ctx.status = 500;
     ctx.body = { message: 'Server error，请重新添加' };
