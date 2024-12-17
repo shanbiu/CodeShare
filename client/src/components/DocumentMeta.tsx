@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Input, Select, DatePicker, Card, Space, Button, Collapse } from "antd";
+import { Input, Select, DatePicker, Card, Space, Button, Collapse, Tag } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { MarkdownEditor } from "./MarkdownEditor";
 import dayjs from "dayjs";
@@ -60,8 +60,9 @@ export function DocumentMate({
         <Panel header="更多设置" key="1">
           <Card>
             {/* 标题输入 */}
-            <div className="flex space-x-4 items-center mb-4">
+            <div className="flex items-center space-x-4 mb-4">
               <Input
+                className="flex-1"
                 addonBefore="标题"
                 placeholder="(最多40个字符)"
                 value={title}
@@ -69,51 +70,50 @@ export function DocumentMate({
                 maxLength={40}
                 style={{ width: '30%' }}
               />
-            </div>
+              <div className="flex-1 flex items-center">
+                <Tag className="whitespace-nowrap m-0 text-sm rounded-none rounded-l-lg" style={{ padding: '5px 11px' }}>
+                  标签
+                </Tag>
+                <Select
+                  className="flex-grow h-8"
+                  mode="tags"
+                  placeholder="选择或输入标签"
+                  value={tags}
+                  onChange={setTags}
+                  options={defaultTags.map((tag) => ({ value: tag, label: tag }))}
+                  maxTagCount="responsive" // 自动处理多余标签
+                  maxTagTextLength={12} // 标签文本过长时进行截断
+                />
+              </div>
 
-            {/* 标签选择 */}
-            <div className="flex items-center mb-4">
-              <span className="whitespace-nowrap bg-gray-100 border bg-zinc-50 py-1 px-3 rounded-l-lg">
-                标签
-              </span>
-              <Select
-                mode="tags"
-                style={{ flexGrow: 1 }}
-                placeholder="选择或输入标签"
-                value={tags}
-                onChange={setTags}
-                options={defaultTags.map((tag) => ({ value: tag, label: tag }))}
-              />
-            </div>
-
-            {/* 过期时间选择 */}
-            <div className="flex items-center mb-4">
-              <span className="whitespace-nowrap bg-gray-100 border bg-zinc-50 py-1 px-3 rounded-l-lg">
-                过期时间
-              </span>
-              <DatePicker
-                className="rounded-none rounded-tr-md rounded-br-md grow"
-                showTime
-                value={expireAt}
-                placeholder="选择过期时间"
-                onChange={setExpireAt}
-                renderExtraFooter={() => (
-                  <div>
-                    <Space className="flex justify-between">
-                      {quickDates.map((quickDate) => (
-                        <Button
-                          className="border-none rounded-none"
-                          key={quickDate.label}
-                          size="small"
-                          onClick={() => setExpireAt(quickDate.value)}
-                        >
-                          {quickDate.label}
-                        </Button>
-                      ))}
-                    </Space>
-                  </div>
-                )}
-              />
+              <div className="flex-1 flex items-center">
+                <Tag className="whitespace-nowrap m-0 text-sm rounded-none rounded-l-lg" style={{ padding: '5.2px 11px' }}>
+                  过期时间
+                </Tag>
+                <DatePicker
+                  className="rounded-none rounded-tr-md rounded-br-md grow"
+                  showTime
+                  value={expireAt}
+                  placeholder="选择过期时间"
+                  onChange={setExpireAt}
+                  renderExtraFooter={() => (
+                    <div>
+                      <Space className="flex justify-between">
+                        {quickDates.map((quickDate) => (
+                          <Button
+                            className="border-none rounded-none"
+                            key={quickDate.label}
+                            size="small"
+                            onClick={() => setExpireAt(quickDate.value)}
+                          >
+                            {quickDate.label}
+                          </Button>
+                        ))}
+                      </Space>
+                    </div>
+                  )}
+                />
+              </div>
             </div>
 
             {/* Markdown 编辑器 */}

@@ -1,0 +1,58 @@
+[
+    {
+      "id": "dc7b3b98-63a6-4ef5-b9d0-e04fda654f6b",
+      "title": "异步函数示例",
+      "snippets": [
+        {
+          "key": "464dd554-f1bb-4d09-8879-04fb034a1ad0",
+          "language": "javascript",
+          "title": "异步函数",
+          "code": "async function fetchData() {\n  try {\n    const response = await fetch('https://api.example.com/data');\n    const data = await response.json();\n    return data;\n  } catch (error) {\n    console.error('Error fetching data:', error);\n  }\n}"
+        }
+      ],
+      "tags": ["async", "javascript"],
+      "create_at": "2024-12-17 15:58:00",
+      "expire_at": null,
+      "markdown": "**异步函数示例**\n\n这是一个简单的异步函数，用于从API获取数据。",
+      "isPublic": true,
+      "password": null
+    },
+    {
+      "id": "a1b2c3d4-e5f6-4321-9876-543210fedcba",
+      "title": "Python列表推导式",
+      "snippets": [
+        {
+          "key": "98765432-abcd-efgh-ijkl-mnopqrstuvwx",
+          "language": "python",
+          "title": "列表推导式",
+          "code": "# 使用列表推导式生成平方数\nsquares = [x**2 for x in range(10)]\nprint(squares)"
+        }
+      ],
+      "tags": ["python", "list comprehension"],
+      "create_at": "2024-12-18 10:30:00",
+      "expire_at": null,
+      "markdown": "**Python列表推导式**\n\n这个例子展示了如何使用列表推导式生成平方数列表。",
+      "isPublic": false,
+      "password": "py1234"
+    },
+    {
+      "id": "45678901-2345-6789-abcd-ef0123456789",
+      "title": "Java Stream API示例",
+      "snippets": [
+        {
+          "key": "11223344-5566-7788-99aa-bbccddeeff00",
+          "language": "java",
+          "title": "使用Stream API",
+          "code": "import java.util.Arrays;\nimport java.util.List;\n\npublic class StreamExample {\n    public static void main(String[] args) {\n        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);\n        \n        int sum = numbers.stream()\n                          .filter(n -> n % 2 == 0)\n                          .mapToInt(Integer::intValue)\n                          .sum();\n        \n        System.out.println(\"Sum of even numbers: \" + sum);\n    }\n}"
+        }
+      ],
+      "tags": ["java", "stream api"],
+      "create_at": "2024-12-19 14:45:00",
+      "expire_at": null,
+      "markdown": "**Java Stream API示例**\n\n这个例子展示了如何使用Java 8+ 的Stream API来处理集合。",
+      "isPublic": true,
+      "password": null
+    }
+  ]
+  
+  

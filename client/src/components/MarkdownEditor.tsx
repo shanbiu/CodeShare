@@ -90,9 +90,12 @@ export function MarkdownEditor({ markdown, setMarkdown }: MarkdownEditorProps) {
 
   return (
     <div>
-      <div className="flex justify-center space-x-2 border border-b-0 ">
-        <Space.Compact block>
-          {buttons.map((button) => (
+      {/* 工具栏容器 */}
+      <div className="flex justify-between items-center space-x-2 border border-b-0 border-neutral-200  overflow-x-auto
+      dark:border-neutral-800">
+        {/* 左侧按钮组 */}
+        <div className="flex space-x-2">
+          {buttons.slice(0, -4).map((button) => (
             <Tooltip key={button.title} title={button.title}>
               <Button
                 className="border-0 rounded-none"
@@ -101,13 +104,29 @@ export function MarkdownEditor({ markdown, setMarkdown }: MarkdownEditorProps) {
               />
             </Tooltip>
           ))}
-        </Space.Compact>
+        </div>
+
+        {/* 右侧按钮组 */}
+        <div className="flex space-x-2">
+          {buttons.slice(-4).map((button) => (
+            <Tooltip key={button.title} title={button.title}>
+              <Button
+                className="border-0 rounded-none"
+                icon={button.icon}
+                onClick={button.action}
+              />
+            </Tooltip>
+          ))}
+        </div>
       </div>
-      <div className="grid grid-cols-2 ">
-        {/* Markdown 编辑区 */}
+
+      {/* 编辑区和预览区 */}
+      <div className="grid grid-cols-2">
         <div>
           <textarea
-            className="border w-full h-60 p-4"
+             className="w-full h-60 p-4 border border-neutral-200 rounded-none dark:border-neutral-800
+             focus:ring-1 outline-none ring-inset ring-black
+             dark:bg-neutral-900 dark:focus:ring-1 dark:ring-white dark:ring-inset dark:border-1"
             ref={textAreaRef}
             rows={10}
             value={markdown}
@@ -115,10 +134,8 @@ export function MarkdownEditor({ markdown, setMarkdown }: MarkdownEditorProps) {
             placeholder="输入 Markdown 描述..."
           />
         </div>
-
-        {/* Markdown 渲染预览区 */}
         <div
-          className="border  overflow-auto h-60 p-4"
+          className="border overflow-auto h-60 p-4 border-neutral-200 dark:border-neutral-800"
           dangerouslySetInnerHTML={{ __html: md.render(markdown) }}
         />
       </div>

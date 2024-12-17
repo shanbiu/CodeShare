@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Layout, Typography, Card } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Layout, Typography, Card, notification } from 'antd';
 import Header from '../components/Header';
 import '../tailwind.css';
 import { DocumentMate } from '../components/DocumentMeta';
@@ -8,13 +8,14 @@ import CodeTabs from '../components/CodeTabs'; // 导入封装好的 CodeTabs
 import ThemeSwitcher from '../components/ThemeSwitcher'; // 导入 ThemeSwitcher
 import dayjs from 'dayjs'; // 导入 dayjs 库
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid'; // 导入 uuid 库来生成唯一的 key
 
 const { Content } = Layout;
 const { Title } = Typography;
 
 function CreatePage() {
   // ID 处理
-  const [id, setId] = useState(0);
+  const [id, setId] = useState<string>(uuidv4()); // 初始化 id 为 uuid
   const [title, setTitle] = useState('代码标题');
   const [tags, setTags] = useState<string[]>([]); // Tags
   const createAt = dayjs(); // 创建时间
@@ -22,26 +23,32 @@ function CreatePage() {
   const [markdown, setMarkdown] = useState("**你好，世界！**"); // markdown 内容
 
   const [snippets, setSnippets] = useState([
-    { key: '1', language: 'javascript', title: '代码标题', code: '//代码内容' },
+    { key: uuidv4(), language: 'javascript', title: '代码块', code: '//请输入你的代码' },
   ]);
   const [activeSnippet, setActiveSnippet] = useState(snippets[0].key);
   const [isPublic, setIsPublic] = useState(true);
   const [password, setPassword] = useState("");
 
-  const addSnippet = (newTabIndex: number) => {
+  const addSnippet = (newTabIndex: string) => {
     const newKey = `${newTabIndex}`;
-    setSnippets([
-      ...snippets,
-      { key: newKey, language: 'javascript', title: '代码标题' + newKey, code: '//代码内容' },
-    ]);
-    setActiveSnippet(newKey);
+    const newSnippet = { key: newKey, language: 'javascript', title: '代码块', code: '//请输入你的代码' };
+    setSnippets((prevSnippets) => [...prevSnippets, newSnippet]);
+    setActiveSnippet(newKey); // 确保设置 activeSnippet 为新的 key
   };
 
   const removeSnippet = (targetKey: string) => {
     const newSnippets = snippets.filter((snippet) => snippet.key !== targetKey);
     setSnippets(newSnippets);
-    if (newSnippets.length && activeSnippet === targetKey) {
-      setActiveSnippet(newSnippets[newSnippets.length - 1].key);
+    
+    // 如果删除的是最后一个代码块，自动添加新代码块并提示
+    if (newSnippets.length === 0) {
+      addSnippet('1'); // 自动添加新的代码块
+      notification.info({
+        message: '删除最后一个代码块',
+        description: '您删除了最后一个代码块，系统已自动为您添加一个新的代码块。',
+      });
+    } else if (activeSnippet === targetKey) {
+      setActiveSnippet(newSnippets[0].key);
     }
   };
 
@@ -82,6 +89,13 @@ function CreatePage() {
       // 处理错误，比如显示错误提示
     }
   };
+
+  // 监听 snippets 数组的变化，如果为空，则添加一个新的代码块
+  useEffect(() => {
+    if (snippets.length === 0) {
+      addSnippet('1'); // 自动添加新的代码块
+    }
+  }, [snippets]); // 每次 snippets 变化时，检查是否为空
 
   return (
     <Layout className="min-h-screen">
