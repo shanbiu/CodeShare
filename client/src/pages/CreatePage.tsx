@@ -8,14 +8,24 @@ import CodeTabs from '../components/CodeTabs'; // 导入封装好的 CodeTabs
 import ThemeSwitcher from '../components/ThemeSwitcher'; // 导入 ThemeSwitcher
 import dayjs from 'dayjs'; // 导入 dayjs 库
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid'; // 导入 uuid 库来生成唯一的 key
+
+// 用于生成 6 位长度的短链 ID
+const generateShortId = (length: number = 6): string => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * chars.length);
+    result += chars[randomIndex];
+  }
+  return result;
+};
 
 const { Content } = Layout;
 const { Title } = Typography;
 
 function CreatePage() {
-  // ID 处理
-  const [id, setId] = useState<string>(uuidv4()); // 初始化 id 为 uuid
+  // 使用 generateShortId 来生成短链 ID
+  const [id, setId] = useState<string>(generateShortId()); // 初始化 id 为 6 位短链
   const [title, setTitle] = useState('代码标题');
   const [tags, setTags] = useState<string[]>([]); // Tags
   const createAt = dayjs(); // 创建时间
@@ -23,7 +33,7 @@ function CreatePage() {
   const [markdown, setMarkdown] = useState("**你好，世界！**"); // markdown 内容
 
   const [snippets, setSnippets] = useState([
-    { key: uuidv4(), language: 'javascript', title: '代码块', code: '//请输入你的代码' },
+    { key: generateShortId(), language: 'javascript', title: '代码块', code: '//请输入你的代码' },
   ]);
   const [activeSnippet, setActiveSnippet] = useState(snippets[0].key);
   const [isPublic, setIsPublic] = useState(true);
