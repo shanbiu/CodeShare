@@ -14,7 +14,9 @@ function App() {
     <Route path="/create" element={<CreatePage />} />
     <Route path="/code/:id" element={<DetailPage />} />
     <Route path="/list" element={<ListPage />} />
+    <Route path="/edit/:id" element={<CreatePage />} />
   </Routes>
+ 
 </BrowserRouter>
   )
 }

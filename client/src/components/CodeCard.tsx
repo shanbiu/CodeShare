@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Card, message, Popover,Tag } from 'antd';
-import { EllipsisOutlined } from '@ant-design/icons';
+import { Card, message, Popover, Tag } from 'antd';
+import { ShareAltOutlined,EllipsisOutlined, LockOutlined, UnlockOutlined } from '@ant-design/icons';
 import Editor from "@monaco-editor/react";
 import ShareCard from './ShareCard'; // 引入新的 ShareCard 组件
 import { useTheme } from './ThemeProvider'; // 引入 useTheme 钩子
 import ActionMenu from './ActionMenu'; // 引入新的 ActionMenu 组件
 import CodeTags from './CodeTags'; // 引入新的 CodeTags 组件
-import { LockOutlined, UnlockOutlined } from "@ant-design/icons"; // 导入图标
+import { useNavigate } from 'react-router-dom'; // 引入 useNavigate
 
 interface CodeCardProps {
   item: {
@@ -29,13 +29,24 @@ interface CodeCardProps {
 export default function CodeCard({ item }: CodeCardProps) {
   const [isPublic, setIsPublic] = useState(item.isPublic);
   const { isDarkMode } = useTheme(); // 获取当前主题
+  const navigate = useNavigate(); // 获取跳转函数
 
   // 动态设置 Monaco Editor 主题
   const editorTheme = isDarkMode ? 'vs-dark' : 'vs';
 
+  // 跳转到代码详情页面
+  const handleCardClick = () => {
+    // 跳转到代码详情页面，传递 id 和 password 参数
+    if (item.password) {
+      navigate(`/code/${item.id}?pw=${item.password}`);
+    } else {
+      navigate(`/code/${item.id}`);
+    }
+  };
+
   return (
     <Card
-      className="w-full shadow-md"
+      className="w-full shadow-md cursor-pointer" // 使卡片区域可点击
       title={
         <div className="flex items-center">
           <span className="text-lg font-bold">{item.title}
@@ -66,6 +77,7 @@ export default function CodeCard({ item }: CodeCardProps) {
           }}
         />
       }
+      onClick={handleCardClick} // 点击卡片跳转到详情页面
     >
       <div className="text-sm text-gray-500 mb-2">
         创建于 {new Date(item.create_at).toLocaleString('zh-CN', { hour12: false })}
@@ -106,7 +118,7 @@ export default function CodeCard({ item }: CodeCardProps) {
         >
           <Tag color="default" className="text-sm font-medium flex items-center cursor-pointer space-x-1 px-2 py-1 border border-gray-400 rounded-lg bg-white text-gray-800 
             hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600">
-            <EllipsisOutlined className="text-xl" />
+            <ShareAltOutlined className="text-xl" />
             <span>分享</span>
           </Tag>
         </Popover>

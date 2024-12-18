@@ -6,6 +6,7 @@ import { DocumentMate } from '../components/DocumentMeta';
 import { SubmitButtons } from '../components/SubmitButton';
 import CodeTabs from '../components/CodeTabs'; // 导入封装好的 CodeTabs
 import ThemeSwitcher from '../components/ThemeSwitcher'; // 导入 ThemeSwitcher
+import { useTheme } from "../components/ThemeProvider";
 import dayjs from 'dayjs'; // 导入 dayjs 库
 import axios from 'axios';
 
@@ -32,6 +33,7 @@ function CreatePage() {
   const [expireAt, setExpireAt] = useState<dayjs.Dayjs | null>(null); // 过期时间
   const [markdown, setMarkdown] = useState("**你好，世界！**"); // markdown 内容
 
+   const { isDarkMode } = useTheme(); 
   const [snippets, setSnippets] = useState([
     { key: generateShortId(), language: 'javascript', title: '代码块', code: '//请输入你的代码' },
   ]);
@@ -105,7 +107,7 @@ function CreatePage() {
   }, [snippets]);
 
   return (
-    <Layout className="min-h-screen">
+    <div className={`min-h-screen ${isDarkMode ? 'bg-neutral-800' : 'bg-gray-100'}`}>
       <Header />
       <Content className="p-4">
         <div className="container mx-auto">
@@ -143,7 +145,7 @@ function CreatePage() {
           />
         </div>
       </Content>
-    </Layout>
+    </div>
   );
 }
 
