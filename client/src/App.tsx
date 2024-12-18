@@ -12,7 +12,7 @@ function App() {
   <Routes>
     <Route path="/*" element={<CreatePage />} />
     <Route path="/create" element={<CreatePage />} />
-    <Route path="/code:key" element={<DetailPage />} />
+    <Route path="/datail" element={<DetailPage />} />
     <Route path="/list" element={<ListPage />} />
   </Routes>
 </BrowserRouter>
