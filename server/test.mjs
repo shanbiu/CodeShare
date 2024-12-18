@@ -20,11 +20,10 @@ async function initializeDb() {
 
   // 读取数据库
   await db.read();
-  // 如果数据库为空，初始化数据结构
   if (!db.data) {
     console.log('Initializing database with default data...');
     db.data = { code_shares: [] }; // 默认数据结构
-    await db.write(); // 写入默认数据
+    await db.write();
   } else {
     // 如果数据库已有数据，确保至少有 code_shares 数组
     db.data.code_shares ||= [];

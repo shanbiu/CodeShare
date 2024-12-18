@@ -89,14 +89,11 @@ function CreatePage() {
   
     try {
       console.log("Sending request to :", '/api/submit');
-      // 使用 axios 发送 POST 请求
       const response = await axios.post('/api/submit', submittedData);
-      
       console.log("Response:", response);
-      // 这里可以根据响应结果进行相应的操作，比如跳转页面或显示提示
     } catch (error) {
       console.error('提交失败:', error);
-      // 处理错误，比如显示错误提示
+
     }
   };
 
@@ -105,7 +102,7 @@ function CreatePage() {
     if (snippets.length === 0) {
       addSnippet('1'); // 自动添加新的代码块
     }
-  }, [snippets]); // 每次 snippets 变化时，检查是否为空
+  }, [snippets]);
 
   return (
     <Layout className="min-h-screen">
@@ -142,6 +139,7 @@ function CreatePage() {
             onIsPublicChange={setIsPublic}
             onPasswordChange={setPassword}
             onSubmit={handleSubmit}
+            id={id}
           />
         </div>
       </Content>

@@ -6,7 +6,5 @@ const router = new Router();
 
 router.get('/code/:id', getData);
 router.get('/list', getAllData);
-
 router.post('/submit', addData);
-
 export default router;

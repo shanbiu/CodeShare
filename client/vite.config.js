@@ -7,7 +7,7 @@ export default defineConfig({
     port : 3000,
     proxy: {
       
-      '/api/submit': {
+      '/api': {
         target: 'http://localhost:3001',
         changeOrigin: true,
         rewrite: (path) => {

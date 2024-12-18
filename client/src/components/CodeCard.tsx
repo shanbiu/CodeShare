@@ -6,6 +6,7 @@ import ShareCard from './ShareCard'; // 引入新的 ShareCard 组件
 import { useTheme } from './ThemeProvider'; // 引入 useTheme 钩子
 import ActionMenu from './ActionMenu'; // 引入新的 ActionMenu 组件
 import CodeTags from './CodeTags'; // 引入新的 CodeTags 组件
+import { LockOutlined, UnlockOutlined } from "@ant-design/icons"; // 导入图标
 
 interface CodeCardProps {
   item: {
@@ -37,7 +38,13 @@ export default function CodeCard({ item }: CodeCardProps) {
       className="w-full shadow-md"
       title={
         <div className="flex items-center">
-          <span className="text-lg font-bold">{item.title}</span>
+          <span className="text-lg font-bold">{item.title}
+          {item.isPublic ? (
+            <UnlockOutlined style={{ marginLeft: 8, color: 'green' }} />
+          ) : (
+            <LockOutlined style={{ marginLeft: 8, color: 'red' }} />
+          )}
+          </span>
         </div>
       }
       extra={

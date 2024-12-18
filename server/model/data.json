@@ -1,69 +1,248 @@
 {
   "code_shares": [
     {
-      "id": "1",
-      "title": "JavaScript基础教程",
-      "code_snippets": [
+      "id": "GQfZqF",
+      "title": "hello",
+      "snippets": [
         {
-          "title": "函数声明",
-          "language": "JavaScript",
-          "code": "function hello() { console.log('Hello, world!'); }"
+          "key": "OAkGUs",
+          "language": "javascript",
+          "title": "代码块",
+          "code": "//请输入你的代码"
         },
         {
-          "title": "函数声明2",
-          "language": "JavaScript",
-          "code": "function hello() { console.log('Hello, world!'); }"
+          "key": "24fb874f-61ed-479e-a299-a94f5c062711",
+          "language": "javascript",
+          "title": "代码块",
+          "code": "//请输入你的代码"
+        },
+        {
+          "key": "0be98964-c98e-4c2e-b791-3599b1eeda31",
+          "language": "javascript",
+          "title": "代码块",
+          "code": "//请输入你的代码"
         }
       ],
-      "description": "这是一个关于 JavaScript 的基础教程。",
+      "tags": [
+        "C++",
+        "JavaScript",
+        "Java",
+        "作业"
+      ],
+      "create_at": "2024-12-18 15:25:11",
+      "expire_at": "2025-01-18 15:04:10",
+      "markdown": "**你好，世界！**",
+      "isPublic": true,
+      "password": ""
+    },
+    {
+      "id": "dc7b3b98-63a6-4ef5-b9d0-e04fda654f6b",
+      "title": "异步函数示例",
+      "snippets": [
+        {
+          "key": "464dd554-f1bb-4d09-8879-04fb034a1ad0",
+          "language": "javascript",
+          "title": "异步函数",
+          "code": "async function fetchData() {\n  try {\n    const response = await fetch('https://api.example.com/data');\n    const data = await response.json();\n    return data;\n  } catch (error) {\n    console.error('Error fetching data:', error);\n  }\n}"
+        },
+        {
+          "key": "d7e9a3c1-7bfa-44a7-8f02-f42e8978b5cc",
+          "language": "javascript",
+          "title": "Promise 示例",
+          "code": "const fetchData = new Promise((resolve, reject) => {\n  setTimeout(() => resolve('Data fetched!'), 2000);\n});\n\nfetchData.then(response => console.log(response));"
+        }
+      ],
+      "tags": [
+        "async",
+        "javascript"
+      ],
+      "create_at": "2024-12-17 15:58:00",
+      "expiration": null,
+      "markdown": "**异步函数示例**\n\n这是一个简单的异步函数，用于从API获取数据。",
+      "isPublic": true,
+      "password": null
+    },
+    {
+      "id": "a1b2c3d4-e5f6-4321-9876-543210fedcba",
+      "title": "Python列表推导式",
+      "snippets": [
+        {
+          "key": "98765432-abcd-efgh-ijkl-mnopqrstuvwx",
+          "language": "python",
+          "title": "列表推导式",
+          "code": "# 使用列表推导式生成平方数\nsquares = [x**2 for x in range(10)]\nprint(squares)"
+        },
+        {
+          "key": "23456789-abcdef12-3456789-9876543210ab",
+          "language": "python",
+          "title": "字典推导式",
+          "code": "# 使用字典推导式生成字典\nsquared_dict = {x: x**2 for x in range(5)}\nprint(squared_dict)"
+        }
+      ],
+      "tags": [
+        "python",
+        "list comprehension"
+      ],
+      "create_at": "2024-12-18 10:30:00",
+      "expiration": null,
+      "markdown": "**Python列表推导式**\n\n这个例子展示了如何使用列表推导式生成平方数列表。",
+      "isPublic": false,
+      "password": "py1234"
+    },
+    {
+      "id": "45678901-2345-6789-abcd-ef0123456789",
+      "title": "Java Stream API示例",
+      "snippets": [
+        {
+          "key": "11223344-5566-7788-99aa-bbccddeeff00",
+          "language": "java",
+          "title": "使用Stream API",
+          "code": "import java.util.Arrays;\nimport java.util.List;\n\npublic class StreamExample {\n    public static void main(String[] args) {\n        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);\n        \n        int sum = numbers.stream()\n                          .filter(n -> n % 2 == 0)\n                          .mapToInt(Integer::intValue)\n                          .sum();\n        \n        System.out.println(\"Sum of even numbers: \" + sum);\n    }\n}"
+        },
+        {
+          "key": "77889900-aabb-ccdd-eeff-112233445566",
+          "language": "python",
+          "title": "并行Stream API",
+          "code": "import java.util.Arrays;\nimport java.util.List;\n\npublic class ParallelStreamExample {\n    public static void main(String[] args) {\n        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);\n        \n        int sum = numbers.parallelStream()\n                          .filter(n -> n % 2 == 0)\n                          .mapToInt(Integer::intValue)\n                          .sum();\n        \n        System.out.println(\"Sum of even numbers (parallel): \" + sum);\n    }\n}"
+        }
+      ],
+      "tags": [
+        "java",
+        "stream api"
+      ],
+      "create_at": "2024-12-19 14:45:00",
+      "expiration": null,
+      "markdown": "**Java Stream API示例**\n\n这个例子展示了如何使用Java 8+ 的Stream API来处理集合。",
+      "isPublic": true,
+      "password": null
+    },
+    {
+      "id": "eoH0W0",
+      "title": "异步函数示例",
+      "snippets": [
+        {
+          "key": "pCACb1",
+          "language": "javascript",
+          "title": "异步函数",
+          "code": ""
+        }
+      ],
       "tags": [
         "JavaScript",
-        "基础"
+        "Python",
+        "HTML"
       ],
-      "created_at": 1702118400000,
-      "expire_at": 1733654400000,
-      "accessibility": "public",
-      "password": null
+      "create_at": "2024-12-18 15:53:10",
+      "expire_at": null,
+      "markdown": "**你好，世界！**",
+      "isPublic": true,
+      "password": ""
     },
     {
-      "id": "2",
-      "title": "Node.js高级教程",
-      "code_snippets": [
+      "id": "al4YEU",
+      "title": "代码标题",
+      "snippets": [
         {
-          "title": "异步编程",
-          "language": "JavaScript",
-          "code": "async function example() { await somethingAsync(); }"
+          "key": "o1KptN",
+          "language": "javascript",
+          "title": "代码块",
+          "code": "//请输入你的代码"
         }
       ],
-      "description": "Node.js 高级编程技巧。",
-      "tags": [
-        "Node.js",
-        "高级"
-      ],
-      "created_at": 1702117502766,
+      "tags": [],
+      "create_at": "2024-12-18 19:02:48",
       "expire_at": null,
-      "accessibility": "public",
-      "password": null
+      "markdown": "**你好，世界！**",
+      "isPublic": true,
+      "password": ""
     },
     {
-      "id": "3",
-      "title": "Node.js高级教程",
-      "code_snippets": [
+      "id": "8YEfxo",
+      "title": "代码标题",
+      "snippets": [
         {
-          "title": "异步编程",
-          "language": "JavaScript",
-          "code": "async function example() { await somethingAsync(); }"
+          "key": "RG7Pol",
+          "language": "javascript",
+          "title": "代码块",
+          "code": "//请输入你的代码"
         }
       ],
-      "description": "Node.js 高级编程技巧。",
-      "tags": [
-        "Node.js",
-        "高级"
-      ],
-      "created_at": 1702117620890,
+      "tags": [],
+      "create_at": "2024-12-18 19:05:34",
       "expire_at": null,
-      "accessibility": "public",
-      "password": null
+      "markdown": "**你好，世界！**",
+      "isPublic": true,
+      "password": ""
+    },
+    {
+      "id": "he7fdK",
+      "title": "代码标题",
+      "snippets": [
+        {
+          "key": "zr3sDz",
+          "language": "javascript",
+          "title": "代码块",
+          "code": "//请输入你的代码"
+        }
+      ],
+      "tags": [
+        "Python",
+        "C++",
+        "JavaScript",
+        "作业",
+        "设计模式",
+        "HTML"
+      ],
+      "create_at": "2024-12-18 19:15:13",
+      "expire_at": null,
+      "markdown": "**你好，世界！**",
+      "isPublic": true,
+      "password": ""
+    },
+    {
+      "id": "DmoIdo",
+      "title": "代码标题",
+      "snippets": [
+        {
+          "key": "EhuRWu",
+          "language": "javascript",
+          "title": "代码块",
+          "code": "//请输入你的代码"
+        }
+      ],
+      "tags": [],
+      "create_at": "2024-12-18 20:05:28",
+      "expire_at": null,
+      "markdown": "**你好，世界！**",
+      "isPublic": false,
+      "password": "IOarad"
+    },
+    {
+      "id": "XLBPyU",
+      "title": "代码标题",
+      "snippets": [
+        {
+          "key": "8Pkotz",
+          "language": "javascript",
+          "title": "代码块",
+          "code": "//请输入你的代码"
+        }
+      ],
+      "tags": [
+        "JavaScript",
+        "Java",
+        "C++",
+        "Python",
+        "作业",
+        "HTML",
+        "设计模式",
+        "111"
+      ],
+      "create_at": "2024-12-18 20:36:32",
+      "expire_at": null,
+      "markdown": "**你好，世界！**",
+      "isPublic": true,
+      "password": ""
     }
   ]
 }

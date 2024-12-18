@@ -1,4 +1,3 @@
-// SubmitButtons.tsx
 import React, { useState, useEffect } from "react";
 import { Button, Space, Input } from "antd";
 import { UnlockOutlined, LockOutlined } from "@ant-design/icons";
@@ -10,6 +9,7 @@ interface SubmitButtonsProps {
   onIsPublicChange: (isPublic: boolean) => void; // 用来更新父组件的公开/加密状态
   onPasswordChange: (password: string) => void; // 用来更新父组件的密码
   onSubmit: () => void; // 提交数据的函数
+  id: string; // 文档id
 }
 
 export function SubmitButtons({
@@ -18,20 +18,12 @@ export function SubmitButtons({
   onIsPublicChange,
   onPasswordChange,
   onSubmit,
+  id,
 }: SubmitButtonsProps) {
   const [generatedPassword, setGeneratedPassword] = useState(password); // 管理生成的密码
   const navigate = useNavigate();
 
   // 生成密码的函数
-  useState(() => {
-    if (isPublic) {
-      setGeneratedPassword("");
-    }
-    else{
-      generatePassword();
-    }
-  }),[isPublic]
-
   const generatePassword = () => {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let result = "";
@@ -39,14 +31,21 @@ export function SubmitButtons({
     for (let i = 0; i < length; i++) {
       result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    onPasswordChange(result); 
+    onPasswordChange(result);
     setGeneratedPassword(result);
   };
 
   // 提交处理函数
   const handleSubmit = () => {
     onSubmit(); // 调用父组件的提交函数
-    // navigate("/code:key"); // 跳转到其他页面
+
+    // 构建目标 URL，检查是否有密码，如果有密码则添加 `?pw=password`
+    let url = `/code/${id}`;
+    if (!isPublic && generatedPassword) {
+      url += `?pw=${generatedPassword}`;
+    }
+
+    navigate(url); // 跳转到其他页面
   };
 
   // 监听公开/加密状态变化，动态生成密码
