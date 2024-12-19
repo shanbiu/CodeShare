@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Card, message, Popover, Tag } from 'antd';
-import { ShareAltOutlined,EllipsisOutlined, LockOutlined, UnlockOutlined } from '@ant-design/icons';
+import { Card, Divider, message, Popover, Tag } from 'antd';
+import { ShareAltOutlined, EllipsisOutlined, LockOutlined, UnlockOutlined } from '@ant-design/icons';
 import Editor from "@monaco-editor/react";
 import ShareCard from './ShareCard'; // 引入新的 ShareCard 组件
 import { useTheme } from './ThemeProvider'; // 引入 useTheme 钩子
 import ActionMenu from './ActionMenu'; // 引入新的 ActionMenu 组件
 import CodeTags from './CodeTags'; // 引入新的 CodeTags 组件
 import { useNavigate } from 'react-router-dom'; // 引入 useNavigate
-
+import SharePopover from './SharePopover';  // 导入 SharePopover 组件
 interface CodeCardProps {
   item: {
     id: string;
@@ -24,9 +24,10 @@ interface CodeCardProps {
     password: string | null; // 密码
     expiration: string | null; // 过期时间
   };
+  fetchData: () => void;  // 接收 fetchData 函数
 }
 
-export default function CodeCard({ item }: CodeCardProps) {
+export default function CodeCard({ item, fetchData }: CodeCardProps) {
   const [isPublic, setIsPublic] = useState(item.isPublic);
   const { isDarkMode } = useTheme(); // 获取当前主题
   const navigate = useNavigate(); // 获取跳转函数
@@ -48,41 +49,36 @@ export default function CodeCard({ item }: CodeCardProps) {
     <Card
       className="w-full shadow-md cursor-pointer" // 使卡片区域可点击
       title={
-        <div className="flex items-center">
-          <span className="text-lg font-bold">{item.title}
-          {item.isPublic ? (
-            <UnlockOutlined style={{ marginLeft: 8, color: 'green' }} />
-          ) : (
-            <LockOutlined style={{ marginLeft: 8, color: 'red' }} />
-          )}
-          </span>
+        <div>
+          <div className="flex items-center mt-3">
+            <span className="text-lg font-bold">{item.title}
+              {item.isPublic ? (
+                <UnlockOutlined style={{ marginLeft: 8, color: 'green' }} />
+              ) : (
+                <LockOutlined style={{ marginLeft: 8, color: 'red' }} />
+              )}
+            </span>
+
+          </div>
+          <div className="text-normal text-gray-500 font-thin  mb-2">
+            创建于 {new Date(item.create_at).toLocaleString('zh-CN', { hour12: false })}
+          </div>
         </div>
+
       }
       extra={
         <ActionMenu
           isPublic={isPublic}
-          handleMenuClick={(key) => {
-            switch (key) {
-              case 'toggleEncryption':
-                setIsPublic(!isPublic);
-                message.success(`代码片段已${isPublic ? '加密' : '解密'}`);
-                break;
-              case 'edit':
-                message.info('编辑功能待实现');
-                break;
-              case 'delete':
-                message.info('删除功能待实现');
-                break;
-            }
-          }}
+          id={item.id}
+          password={item.password}
+          fetchData={fetchData}
         />
       }
-      onClick={handleCardClick} // 点击卡片跳转到详情页面
+
+    // onClick={handleCardClick} // 点击卡片跳转到详情页面
     >
-      <div className="text-sm text-gray-500 mb-2">
-        创建于 {new Date(item.create_at).toLocaleString('zh-CN', { hour12: false })}
-      </div>
-      <div className="h-48 mb-4">
+
+      <div className="h-48 mb-4" onClick={handleCardClick}>
         {/* 编辑器 */}
         <Editor
           height="100%"
@@ -102,26 +98,7 @@ export default function CodeCard({ item }: CodeCardProps) {
       <div className="flex justify-between items-center">
         {/* 使用 CodeTags 组件显示公开状态和标签 */}
         <CodeTags isPublic={isPublic} tags={item.tags} />
-
-        <Popover
-          content={
-            <ShareCard
-              id={item.id}
-              isPublic={isPublic}
-              password={item.password}
-              expiration={item.expiration}
-            />
-          }
-          title="分享详情"
-          trigger="hover"
-          placement="bottom"
-        >
-          <Tag color="default" className="text-sm font-medium flex items-center cursor-pointer space-x-1 px-2 py-1 border border-gray-400 rounded-lg bg-white text-gray-800 
-            hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600">
-            <ShareAltOutlined className="text-xl" />
-            <span>分享</span>
-          </Tag>
-        </Popover>
+        <SharePopover  item={item} />
       </div>
     </Card>
   );

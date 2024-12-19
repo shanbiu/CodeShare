@@ -27,7 +27,7 @@ const { Title } = Typography;
 function CreatePage() {
   // 使用 generateShortId 来生成短链 ID
   const [id, setId] = useState<string>(generateShortId()); // 初始化 id 为 6 位短链
-  const [title, setTitle] = useState('代码标题');
+  const [title, setTitle] = useState('代码片段');
   const [tags, setTags] = useState<string[]>([]); // Tags
   const createAt = dayjs(); // 创建时间
   const [expireAt, setExpireAt] = useState<dayjs.Dayjs | null>(null); // 过期时间
@@ -116,7 +116,6 @@ function CreatePage() {
               <Title level={3}>{title}</Title>
               <ThemeSwitcher className="w-28" />
             </div>
-
             <CodeTabs
               snippets={snippets}
               activeSnippet={activeSnippet}

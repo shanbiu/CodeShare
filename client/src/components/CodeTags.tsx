@@ -20,7 +20,7 @@ const CodeTags: React.FC<CodeTagsProps> = ({ isPublic, tags }) => {
       if (containerRef.current) {
         // 获取父容器的父容器的宽度
         const parentWidth = containerRef.current.parentElement?.offsetWidth; // 获取父容器的父容器的宽度
-        console.log('父容器的父容器的宽度:', parentWidth); // 输出父容器的父容器的宽度
+        // console.log('父容器的父容器的宽度:', parentWidth); // 输出父容器的父容器的宽度
 
         if (parentWidth) {
           const maxTags = Math.floor((parentWidth -140) / tagWidth); // 计算最大可显示的标签数量 (80% 父容器父容器宽度)

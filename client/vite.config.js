@@ -6,12 +6,11 @@ export default defineConfig({
   server: {
     port : 3000,
     proxy: {
-      
       '/api': {
         target: 'http://localhost:3001',
         changeOrigin: true,
         rewrite: (path) => {
-          console.log(`Rewriting path: ${path.replace(/^\/api/, '')}`);  // 在控制台中查看请求路径
+          console.log(`Rewriting path: ${path.replace(/^\/api/, '')}`);  
           return path.replace(/^\/api/, '');
         },
       },

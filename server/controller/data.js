@@ -2,9 +2,9 @@ import { loadDB } from '../service/database.js';
 
 export async function getData(ctx) {
   try {
-    // 获取查询参数中的密码 (例如: ?pw=your_password)
+    // 获取查询参数中的密码 
     const { pw } = ctx.query;
-    // 异步加载数据库
+    // 加载数据库
     const db = await loadDB();
     const result = db.data.code_shares.find(item => item.id === ctx.params.id);
 
@@ -27,11 +27,8 @@ export async function getData(ctx) {
         return;
       }
       else {
-        // 如果密码正确，返回数据
         console.log('密码正确，返回数据');
       }
-
-      // 返回查询到的数据
       ctx.body = result;
     } else {
       ctx.status = 404;
@@ -46,9 +43,7 @@ export async function getData(ctx) {
 }
 export async function getAllData(ctx) {
   try {
-    // 异步加载数据库
     const db = await loadDB();
-    // 返回查询到的数据
     ctx.body = db.data.code_shares;
 
   } catch (error) {
@@ -60,26 +55,19 @@ export async function getAllData(ctx) {
 
 export async function addData(ctx) {
   try {
-    // 获取请求体中的数据
     const newCodeShare = ctx.request.body;
 
     console.log('收到的提交数据:', newCodeShare);
 
-    // 调用 loadDB() 函数来获取数据库实例
-    const db = await loadDB();  // 确保 db 已经从 loadDB() 获取到
+    const db = await loadDB();
 
-    // 确保 code_shares 数组存在
     if (!db.data.code_shares) {
-      db.data.code_shares = []; // 如果不存在，初始化为一个空数组
+      db.data.code_shares = [];
     }
 
-    // 将新分享添加到数据库
     db.data.code_shares.push(newCodeShare);
 
-    // 将数据写入数据库
     await db.write();
-
-    // 返回成功的响应
     ctx.body = { success: true, message: '提交成功' };
   } catch (error) {
     console.error('添加数据失败:', error);
@@ -87,5 +75,120 @@ export async function addData(ctx) {
     // 错误处理：如果操作失败，返回 500 错误
     ctx.status = 500;
     ctx.body = { message: 'Server error，请重新添加' };
+  }
+}
+
+export async function deleteData(ctx) {
+  try {
+    console.log('收到删除请求');
+    const { id } = ctx.params; // 从 URL 参数中获取 ID
+    console.log('要删除的数据ID:', id);
+    const { pw } = ctx.query; // 从查询参数中获取密码
+    console.log('要删除的数据密码:', pw);
+
+    // 加载数据库
+    const db = await loadDB();
+
+    // 查找要删除的数据
+    const result = db.data.code_shares.find(item => item.id === id); // 这里定义了 result
+
+    if (result) {
+      // 如果是加密状态，验证密码
+      if (!result.isPublic && result.password !== pw) {
+        ctx.body = { message: '密码错误。' };
+        ctx.status = 403; // Forbidden
+        return;
+      }
+
+      // 删除数据
+      const index = db.data.code_shares.findIndex(item => item.id === id);
+      if (index !== -1) {
+        db.data.code_shares.splice(index, 1);
+        // 保存更新后的数据
+        await db.write();
+
+        ctx.body = { success: true, message: '数据删除成功' };
+      } else {
+        ctx.status = 404;
+        ctx.body = { message: '数据未找到' };
+      }
+    } else {
+      ctx.status = 404;
+      ctx.body = { message: '数据未找到' };
+    }
+  } catch (error) {
+    console.error('删除数据失败:', error);
+    ctx.status = 500;
+    ctx.body = { message: 'Server error' };
+  }
+}
+
+export async function updateData(ctx) {
+  try {
+    const { id } = ctx.params; // 从 URL 参数中获取 ID
+    const updatedData = ctx.request.body; // 从请求体中获取新的数据
+
+    // 加载数据库
+    const db = await loadDB();
+
+    // 查找要更新的数据
+    const index = db.data.code_shares.findIndex(item => item.id === id);
+
+    if (index !== -1) {
+      // 替换旧的数据
+      db.data.code_shares[index] = { ...db.data.code_shares[index], ...updatedData };
+
+      // 保存更新后的数据
+      await db.write();
+
+      ctx.body = { success: true, message: '数据更新成功' };
+    } else {
+      ctx.status = 404;
+      ctx.body = { message: '数据未找到' };
+    }
+
+  } catch (error) {
+    console.error('更新数据失败:', error);
+    ctx.status = 500;
+    ctx.body = { message: 'Server error' };
+  }
+}
+
+export async function updatePrivacyStatus(ctx) {
+  try {
+    const { id } = ctx.params;
+  const { pw } = ctx.query;  // 获取查询参数中的密码
+
+  // 查找对应的 codeShare 数据
+  const codeShare = codeShares[id];
+
+  if (!codeShare) {
+    ctx.status = 404;
+    ctx.body = { message: '未找到指定的代码片段' };
+    return;
+  }
+
+  if (codeShare.isPublic) {
+    // 如果是公开的，不需要验证密码，直接删除
+    delete codeShares[id];
+    ctx.status = 200;
+    ctx.body = { message: '删除成功' };
+  } else {
+    // 如果是加密的，需要验证密码
+    if (codeShare.password !== pw) {
+      ctx.status = 403;  // 密码错误
+      ctx.body = { message: '密码错误，无法删除' };
+      return;
+    }
+
+    // 密码验证通过，删除代码片段
+    delete codeShares[id];
+    ctx.status = 200;
+    ctx.body = { message: '删除成功' };
+  }
+  } catch (error) {
+    console.error('更新隐私状态失败:', error);
+    ctx.status = 500;
+    ctx.body = { message: 'Server error' };
   }
 }

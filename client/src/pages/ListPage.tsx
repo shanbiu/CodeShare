@@ -38,20 +38,21 @@ export default function CodeList() {
   const [error, setError] = useState<string | null>(null); // 错误状态
 
   // 获取数据函数
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get("/api/list"); // 发起请求到后端的 /list 路由
-        setCodeData(response.data); // 将返回的数据存储到 state 中
-      } catch (err) {
-        console.error("获取数据失败:", err);
-        setError("获取数据失败，请稍后再试。");
-      } finally {
-        setLoading(false); // 请求完成
-      }
-    };
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get("/api/list"); // 发起请求到后端的 /list 路由
+      setCodeData(response.data); // 将返回的数据存储到 state 中
+    } catch (err) {
+      console.error("获取数据失败:", err);
+      setError("获取数据失败，请稍后再试。");
+    } finally {
+      setLoading(false); // 请求完成
+    }
+  };
 
+  // 在组件加载时获取数据
+  useEffect(() => {
     fetchData();
   }, []); // 组件加载时发起请求
 
@@ -102,7 +103,7 @@ export default function CodeList() {
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filteredData.map((item) => (
-              <CodeCard key={item.id} item={item} />
+              <CodeCard key={item.id} item={item} fetchData={fetchData} />
             ))}
           </div>
         </div>

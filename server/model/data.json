@@ -1,68 +1,6 @@
 {
   "code_shares": [
     {
-      "id": "GQfZqF",
-      "title": "hello",
-      "snippets": [
-        {
-          "key": "OAkGUs",
-          "language": "javascript",
-          "title": "代码块",
-          "code": "//请输入你的代码"
-        },
-        {
-          "key": "24fb874f-61ed-479e-a299-a94f5c062711",
-          "language": "javascript",
-          "title": "代码块",
-          "code": "//请输入你的代码"
-        },
-        {
-          "key": "0be98964-c98e-4c2e-b791-3599b1eeda31",
-          "language": "javascript",
-          "title": "代码块",
-          "code": "//请输入你的代码"
-        }
-      ],
-      "tags": [
-        "C++",
-        "JavaScript",
-        "Java",
-        "作业"
-      ],
-      "create_at": "2024-12-18 15:25:11",
-      "expire_at": "2025-01-18 15:04:10",
-      "markdown": "**你好，世界！**",
-      "isPublic": true,
-      "password": ""
-    },
-    {
-      "id": "dc7b3b98-63a6-4ef5-b9d0-e04fda654f6b",
-      "title": "异步函数示例",
-      "snippets": [
-        {
-          "key": "464dd554-f1bb-4d09-8879-04fb034a1ad0",
-          "language": "javascript",
-          "title": "异步函数",
-          "code": "async function fetchData() {\n  try {\n    const response = await fetch('https://api.example.com/data');\n    const data = await response.json();\n    return data;\n  } catch (error) {\n    console.error('Error fetching data:', error);\n  }\n}"
-        },
-        {
-          "key": "d7e9a3c1-7bfa-44a7-8f02-f42e8978b5cc",
-          "language": "javascript",
-          "title": "Promise 示例",
-          "code": "const fetchData = new Promise((resolve, reject) => {\n  setTimeout(() => resolve('Data fetched!'), 2000);\n});\n\nfetchData.then(response => console.log(response));"
-        }
-      ],
-      "tags": [
-        "async",
-        "javascript"
-      ],
-      "create_at": "2024-12-17 15:58:00",
-      "expiration": null,
-      "markdown": "**异步函数示例**\n\n这是一个简单的异步函数，用于从API获取数据。",
-      "isPublic": true,
-      "password": null
-    },
-    {
       "id": "a1b2c3d4-e5f6-4321-9876-543210fedcba",
       "title": "Python列表推导式",
       "snippets": [

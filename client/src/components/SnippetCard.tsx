@@ -16,6 +16,7 @@ interface Snippet {
 
 interface SnippetData {
   title: string;
+  id: string;
   markdown: string;
   snippets: Snippet[];
   tags: string[];
@@ -121,6 +122,7 @@ const SnippetCard: React.FC<SnippetCardProps> = ({ snippetData, handleCopy, hand
 
         <ActionMenu
           isPublic={snippetData.isPublic}
+          id ={snippetData.id}
           handleMenuClick={handleMenuClick}
         />
       </div>
