@@ -84,15 +84,33 @@
           "key": "EhuRWu",
           "language": "javascript",
           "title": "代码块",
-          "code": "//请输入你的代码"
+          "code": "//111"
         }
       ],
       "tags": [],
-      "create_at": "2024-12-18 20:05:28",
+      "create_at": "2024-12-20 16:38:11",
       "expire_at": null,
       "markdown": "**你好，世界！**",
       "isPublic": false,
-      "password": "IOarad"
+      "password": ""
+    },
+    {
+      "id": "Tu8i0l",
+      "title": "代码片段",
+      "snippets": [
+        {
+          "key": "b7quwy",
+          "language": "javascript",
+          "title": "代码块",
+          "code": "//113915"
+        }
+      ],
+      "tags": [],
+      "create_at": "2024-12-20 16:39:36",
+      "expire_at": null,
+      "markdown": "**你好，世界！**",
+      "isPublic": true,
+      "password": ""
     }
   ]
 }

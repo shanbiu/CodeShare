@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Dropdown, Menu, Modal } from 'antd';
-import { LockOutlined, UnlockOutlined, EditOutlined, DeleteOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { Dropdown, Menu, Modal, Input, Button, Space } from 'antd';
+import { LockOutlined, UnlockOutlined, EditOutlined, DeleteOutlined, EllipsisOutlined, EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom'; // 使用 React Router 进行跳转
 import axios from 'axios'; // 这里使用 axios 发送请求
 
@@ -15,6 +15,9 @@ interface ActionMenuProps {
 const ActionMenu: React.FC<ActionMenuProps> = ({ isPublic, id, password, fetchData }) => {
   const navigate = useNavigate(); // 用于跳转
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false); // 控制删除弹窗的显示
+  const [isModalVisible, setIsModalVisible] = useState(false); // 控制加密/取消加密弹窗显示
+  const [newPassword, setNewPassword] = useState<string>(''); // 控制加密时生成的密码
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false); // 控制密码可见性
 
   // 设置菜单项
   const menuItems = [
@@ -39,17 +42,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ isPublic, id, password, fetchDa
   const handleActionClick = async (key: string) => {
     switch (key) {
       case 'toggleEncryption':
-        try {
-          const response = await axios.patch(`/api/code_shares/${id}/privacy`, {
-            isPublic: !isPublic,
-          });
-          if (response.data.success) {
-            alert('加密状态更新成功');
-          }
-        } catch (error) {
-          alert('更新加密状态失败');
-          console.error(error);
-        }
+        setIsModalVisible(true); // 打开加密/取消加密弹窗
         break;
 
       case 'delete':
@@ -57,17 +50,67 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ isPublic, id, password, fetchDa
         setIsDeleteModalVisible(true);
         break;
 
-        case 'edit':
-          // 根据是否有密码决定跳转的路径
-          if (password) {
-            navigate(`/edit/${id}?pw=${password}`);
-          } else {
-            navigate(`/edit/${id}`);
-          }
-          break;
+      case 'edit':
+        if (password) {
+          navigate(`/edit/${id}?pw=${password}`);
+        } else {
+          navigate(`/edit/${id}`);
+        }
+        break;
 
       default:
         break;
+    }
+  };
+
+  // 生成随机密码的函数
+  const generateRandomPassword = () => {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let result = '';
+    const length = Math.floor(Math.random() * (8 - 4 + 1)) + 4; // 密码长度 4-8
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    setNewPassword(result);
+  };
+
+  // 提交加密/取消加密
+  const handleToggleEncryption = async () => {
+    try {
+      if (!isPublic) {
+        // 取消加密请求
+        if (!password) {
+          alert('当前文档已公开，无法取消加密');
+          return;
+        }
+        // 取消加密，带上当前密码
+        const response = await axios.patch(`/api/updatePublic/${id}`, {
+          isPublic: false,
+          password: password,  // 需要传递原密码
+        });
+        if (response.data.success) {
+          alert('取消加密成功');
+        }
+      } else {
+        // 加密请求，提交新生成的密码
+        if (!newPassword) {
+          alert('请设置一个密码');
+          return;
+        }
+
+        const response = await axios.patch(`/api/updatePublic/${id}`, {
+          isPublic: true,
+          password: newPassword, // 提交新密码
+        });
+        if (response.data.success) {
+          alert('加密成功');
+        }
+      }
+      setIsModalVisible(false); // 关闭弹窗
+      fetchData(); // 刷新数据
+    } catch (error) {
+      alert('操作失败');
+      console.error(error);
     }
   };
 
@@ -113,6 +156,11 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ isPublic, id, password, fetchDa
     setIsDeleteModalVisible(false); // 关闭弹窗
   };
 
+  // 切换密码可见性
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
   return (
     <button>
       <Dropdown
@@ -139,6 +187,40 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ isPublic, id, password, fetchDa
         okButtonProps={{ danger: true }} // 确认按钮为危险按钮
       >
         <p>是否确认删除？该操作不可找回。</p>
+      </Modal>
+
+      {/* 加密/取消加密弹窗 */}
+      <Modal
+        title={isPublic ? '加密' : '取消加密'}
+        visible={isModalVisible}
+        onOk={handleToggleEncryption}
+        onCancel={() => setIsModalVisible(false)}
+        okText="确认"
+        cancelText="取消"
+      >
+        {isPublic ? (
+          <>
+            <Input
+              type={isPasswordVisible ? 'text' : 'password'}
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="请输入密码"
+              suffix={
+                <Button
+                  icon={isPasswordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                  onClick={togglePasswordVisibility}
+                  type="text"
+                />
+              }
+            />
+            <Button type="link" onClick={generateRandomPassword}>生成随机密码</Button>
+          </>
+        ) : (
+          <div>
+            <UnlockOutlined style={{ marginRight: 10 }} />
+            <span>确认取消加密，该操作将公开数据。</span>
+          </div>
+        )}
       </Modal>
     </button>
   );
