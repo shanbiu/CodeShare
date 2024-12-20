@@ -28,6 +28,8 @@ const { Title } = Typography;
 
 function CreatePage() {
   const { code_id } = useParams(); // 获取 URL 中的 id 参数
+  const queryPassword = new URLSearchParams(location.search).get('pw'); // 获取 URL 中的密码参数
+
   const navigate = useNavigate();
   const [codeData, setCodeData] = useState<any | null>(null); // 用于存储编辑页面的代码数据
   const [loading, setLoading] = useState(false); // 控制加载状态
@@ -52,12 +54,28 @@ useEffect(() => {
   if (code_id) {
     setId(code_id); // 更新 id
     console.log('编辑模式', code_id);
+    console.log('密码', queryPassword);
     const fetchData = async () => {
       try {
+        console.log('开始');
         setLoading(true);
-        const response = await axios.get(`/api/code/${code_id}`);
+        console.log('开始2');
+        // 判断是否有密码查询参数
+        const url = queryPassword
+          ? `/api/code/${code_id}?pw=${queryPassword}`  // 如果有密码参数，拼接上密码
+          : `/api/code/${code_id}`;  // 如果没有密码参数，不拼接密码
+        const response = await axios.get(url);
         setCodeData(response.data);
-        const { title, snippets, tags, markdown, isPublic, password, expireAt, createAt } = response.data;
+        const { title, snippets, tags, markdown, isPublic, password: dbPassword, expireAt, createAt } = response.data;
+        console.log('正确密码', dbPassword)
+        if (!isPublic && queryPassword !== dbPassword) {
+          notification.error({
+            message: '密码错误',
+            description: '您输入的密码不正确，无法访问该代码。',
+          });
+          navigate('/'); // 或者跳转到其他页面
+          return;
+        }
         setTitle(title);
         setSnippets(snippets);
         setTags(tags);
@@ -199,6 +217,7 @@ useEffect(() => {
             onSubmit={handleSubmit}
             id={id}
             isEditMode={!!code_id} // 根据 code_id 判断是否为编辑模式
+            queryPassword={queryPassword}
           />
         </div>
       </Content>
