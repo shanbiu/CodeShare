@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import { Editor } from '@monaco-editor/react';
 import CodeTags from './CodeTags'; // 引入 CodeTags 组件
 import { useTheme } from './ThemeProvider'; // 引入 useTheme
+import { useNavigate } from 'react-router-dom'; // 引入 useNavigate
 
 interface Snippet {
   key: string;
@@ -17,12 +18,14 @@ interface Snippet {
 interface SnippetData {
   title: string;
   id: string;
+  password: string | null; // 密码
   markdown: string;
   snippets: Snippet[];
   tags: string[];
   isPublic: boolean;
   expiration: string | null;
   create_at: string;
+  
 }
 
 interface SnippetCardProps {
@@ -33,6 +36,7 @@ interface SnippetCardProps {
 
 const SnippetCard: React.FC<SnippetCardProps> = ({ snippetData, handleCopy, handleMenuClick }) => {
   const { isDarkMode } = useTheme(); // 获取当前主题状态
+  const navigate = useNavigate(); // 获取路由跳转函数
 
   const formatDate = (dateString: string) => new Date(dateString).toLocaleString();
 
@@ -75,6 +79,12 @@ const SnippetCard: React.FC<SnippetCardProps> = ({ snippetData, handleCopy, hand
     ),
   }));
 
+    // 删除后的跳转函数
+    const handleDelete = () => {
+      if (snippetData.id) {
+        navigate('/');  // 删除后跳转到根路由
+      }
+    };
 
   return (
     <Card style={{ flex: 1, fontSize: '14px', height: '500px' }} className="relative">
@@ -123,7 +133,9 @@ const SnippetCard: React.FC<SnippetCardProps> = ({ snippetData, handleCopy, hand
         <ActionMenu
           isPublic={snippetData.isPublic}
           id ={snippetData.id}
-          handleMenuClick={handleMenuClick}
+          password={snippetData.password}
+          fetchData={handleDelete}
+
         />
       </div>
     </Card>

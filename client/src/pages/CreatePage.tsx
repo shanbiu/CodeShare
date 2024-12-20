@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Typography, Card, notification } from 'antd';
+import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import '../tailwind.css';
 import { DocumentMate } from '../components/DocumentMeta';
@@ -9,6 +10,7 @@ import ThemeSwitcher from '../components/ThemeSwitcher'; // 导入 ThemeSwitcher
 import { useTheme } from "../components/ThemeProvider";
 import dayjs from 'dayjs'; // 导入 dayjs 库
 import axios from 'axios';
+import CodeForm from '../components/CodeForm'; // 引入表单组件
 
 // 用于生成 6 位长度的短链 ID
 const generateShortId = (length: number = 6): string => {
@@ -25,6 +27,10 @@ const { Content } = Layout;
 const { Title } = Typography;
 
 function CreatePage() {
+  const { code_id } = useParams(); // 获取 URL 中的 id 参数
+  const navigate = useNavigate();
+  const [codeData, setCodeData] = useState<any | null>(null); // 用于存储编辑页面的代码数据
+  const [loading, setLoading] = useState(false); // 控制加载状态
   // 使用 generateShortId 来生成短链 ID
   const [id, setId] = useState<string>(generateShortId()); // 初始化 id 为 6 位短链
   const [title, setTitle] = useState('代码片段');
@@ -40,6 +46,36 @@ function CreatePage() {
   const [activeSnippet, setActiveSnippet] = useState(snippets[0].key);
   const [isPublic, setIsPublic] = useState(true);
   const [password, setPassword] = useState("");
+
+// 1. 加载数据（如果是编辑模式）
+useEffect(() => {
+  if (code_id) {
+    setId(code_id); // 更新 id
+    console.log('编辑模式', code_id);
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`/api/code/${code_id}`);
+        setCodeData(response.data);
+        const { title, snippets, tags, markdown, isPublic, password, expireAt, createAt } = response.data;
+        setTitle(title);
+        setSnippets(snippets);
+        setTags(tags);
+        setMarkdown(markdown);
+        setIsPublic(isPublic);
+        setPassword(password || ""); // 如果是加密状态，填充密码
+        setExpireAt(expireAt ? dayjs(expireAt) : null);
+        setActiveSnippet(snippets[0].key); // 设置第一个代码块为活动代码块
+      } catch (error) {
+        console.error('加载数据失败', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }
+}, [code_id]);
+
 
   const addSnippet = (newTabIndex: string) => {
     const newKey = `${newTabIndex}`;
@@ -75,6 +111,8 @@ function CreatePage() {
   const handleTitleChange = (newTitle: string) => {
     setTitle(newTitle || '代码标题');
   };
+   // 判断是否为编辑模式
+   const isEditMode = !!code_id; // 如果 code_id 存在，则为编辑模式
 
   const handleSubmit = async () => {
     const submittedData = {
@@ -90,12 +128,31 @@ function CreatePage() {
     };
   
     try {
-      console.log("Sending request to :", '/api/submit');
-      const response = await axios.post('/api/submit', submittedData);
-      console.log("Response:", response);
+      if (isEditMode) {
+        // 编辑模式，更新已有数据
+        console.log("Updating data to:", '/api/update');
+        const response = await axios.put(`/api/update/${id}`, submittedData);
+        console.log("Response:", response);
+        notification.success({
+          message: '更新成功',
+          description: '代码片段已成功更新。',
+        });
+      } else {
+        // 新建模式，提交新数据
+        console.log("Creating new data to:", '/api/submit');
+        const response = await axios.post('/api/submit', submittedData);
+        console.log("Response:", response);
+        notification.success({
+          message: '创建成功',
+          description: '代码片段已成功创建。',
+        });
+      }
     } catch (error) {
       console.error('提交失败:', error);
-
+      notification.error({
+        message: '提交失败',
+        description: '出现错误，请稍后再试。',
+      });
     }
   };
 
@@ -141,6 +198,7 @@ function CreatePage() {
             onPasswordChange={setPassword}
             onSubmit={handleSubmit}
             id={id}
+            isEditMode={!!code_id} // 根据 code_id 判断是否为编辑模式
           />
         </div>
       </Content>

@@ -10,6 +10,7 @@ interface SubmitButtonsProps {
   onPasswordChange: (password: string) => void; // 用来更新父组件的密码
   onSubmit: () => void; // 提交数据的函数
   id: string; // 文档id
+  isEditMode: boolean; // 是否为编辑模式
 }
 
 export function SubmitButtons({
@@ -19,6 +20,7 @@ export function SubmitButtons({
   onPasswordChange,
   onSubmit,
   id,
+  isEditMode,
 }: SubmitButtonsProps) {
   const [generatedPassword, setGeneratedPassword] = useState(password); // 管理生成的密码
   const navigate = useNavigate();
@@ -40,12 +42,12 @@ export function SubmitButtons({
     onSubmit(); // 调用父组件的提交函数
 
     // 构建目标 URL，检查是否有密码，如果有密码则添加 `?pw=password`
-    let url = `/code/${id}`;
+    let url = isEditMode ? `/code/${id}` : `/code/${id}`; // 编辑模式下的 URL
     if (!isPublic && generatedPassword) {
       url += `?pw=${generatedPassword}`;
     }
 
-    navigate(url); // 跳转到其他页面
+    navigate(url); // 跳转到目标页面
   };
 
   // 监听公开/加密状态变化，动态生成密码
@@ -77,7 +79,7 @@ export function SubmitButtons({
           </Button>
         </Space.Compact>
         <Button type="primary" onClick={handleSubmit}>
-          提交
+          {isEditMode ? "更新" : "提交"} {/* 编辑模式下显示 "更新" */}
         </Button>
       </div>
 

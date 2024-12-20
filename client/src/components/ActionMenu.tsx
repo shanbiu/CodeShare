@@ -57,10 +57,14 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ isPublic, id, password, fetchDa
         setIsDeleteModalVisible(true);
         break;
 
-      case 'edit':
-        // 跳转到编辑页面
-        navigate(`/edit/${id}`);
-        break;
+        case 'edit':
+          // 根据是否有密码决定跳转的路径
+          if (password) {
+            navigate(`/edit/${id}?pw=${password}`);
+          } else {
+            navigate(`/edit/${id}`);
+          }
+          break;
 
       default:
         break;
@@ -110,7 +114,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ isPublic, id, password, fetchDa
   };
 
   return (
-    <>
+    <button>
       <Dropdown
         overlay={
           <Menu
@@ -136,7 +140,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ isPublic, id, password, fetchDa
       >
         <p>是否确认删除？该操作不可找回。</p>
       </Modal>
-    </>
+    </button>
   );
 };
 
