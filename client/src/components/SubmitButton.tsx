@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Space, Input } from "antd";
 import { UnlockOutlined, LockOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import randomPassword from "./randomPassword";
 
 interface SubmitButtonsProps {
   isPublic: boolean; // 当前是否为公开状态
@@ -30,12 +31,7 @@ export function SubmitButtons({
 
   // 生成密码的函数
   const generatePassword = () => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let result = "";
-    const length = Math.floor(Math.random() * (8 - 4 + 1)) + 4;
-    for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
+    let result = randomPassword();
     onPasswordChange(result);
     setGeneratedPassword(result);
     setStoredPassword(result); // 暂存密码也更新

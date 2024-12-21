@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {  Button,  Input,  Popover,  message,  Tooltip,  Select,  DatePicker,  Space,} from "antd";
 import { CopyOutlined, QrcodeOutlined } from "@ant-design/icons";
+import randomPassword from "./randomPassword";
 import axios from "axios";
 import dayjs from "dayjs";
 
@@ -28,18 +29,6 @@ const ShareCard: React.FC<ShareCardProps> = ({
     isPublic ? "public" : "private"
   ); // 默认分享状态
 
-  // 生成密码的处理函数
-  const generatePassword = () => {
-    const chars =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let result = "";
-    const length = Math.floor(Math.random() * (8 - 4 + 1)) + 4;
-    for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-  };
-
   // 更新分享范围
   const handleShareStatusChange = async (value: string) => {
     const newShareStatus = value === "public"; // 根据选择的值更新分享状态
@@ -60,7 +49,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
         }
       } else {
         // newExpireAt
-        const newPassword = generatePassword(); // 生成新密码
+        const newPassword = randomPassword(); // 生成新密码
         const response = await axios.patch(`/api/updatePublic/${id}`, {
           isPublic: !newShareStatus,
           password: newPassword, // 提交新密码
@@ -195,7 +184,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
               <Button
                 type="link"
                 onClick={() => {
-                  const newPassword = generatePassword();
+                  const newPassword = randomPassword();
                   setGeneratedPassword(newPassword); // 更新本地密码
                 }}
               >

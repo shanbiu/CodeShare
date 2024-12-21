@@ -51,8 +51,8 @@
       "create_at": "2024-12-21 12:38:43",
       "expire_at": 1737476814965,
       "markdown": "**Java Stream API示例**\n\n这个例子展示了如何使用Java 8+ 的Stream API来处理集合。",
-      "isPublic": true,
-      "password": null
+      "isPublic": false,
+      "password": "IT0jgWj"
     },
     {
       "id": "eoH0W0",

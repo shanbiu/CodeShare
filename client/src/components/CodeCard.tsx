@@ -77,7 +77,7 @@ export default function CodeCard({ item, fetchData }: CodeCardProps) {
         />
       }
 
-    // onClick={handleCardClick} // 点击卡片跳转到详情页面
+    onClick={handleCardClick} // 点击卡片跳转到详情页面
     >
 
       <div className="h-48 mb-4" onClick={handleCardClick}>
@@ -100,10 +100,13 @@ export default function CodeCard({ item, fetchData }: CodeCardProps) {
       <div className="flex justify-between items-center">
         {/* 使用 CodeTags 组件显示公开状态和标签 */}
         <CodeTags isPublic={isPublic} tags={item.tags} />
+        <button onClick={(e)=> e.stopPropagation()}>
         <SharePopover  
         item={item}
         fetchData={fetchData}
         />
+        </button>
+        
       </div>
     </Card>
   );
