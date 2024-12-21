@@ -6,18 +6,21 @@ import ShareCard from './ShareCard';
 interface SharePopoverProps {
   item: any;           // 传递的 item 数据
   tagProps?: React.ComponentProps<typeof Tag>;  // 可选的 Tag 属性
+fetchData: ()=> void;
 }
 
-const SharePopover: React.FC<SharePopoverProps> = ({ item, tagProps }) => {
+const SharePopover: React.FC<SharePopoverProps> = ({ item, tagProps ,fetchData}) => {
   return (
     <Popover
       title={<div className="text-center font-bold">分享代码片段</div>}
       content={
+        
         <ShareCard
           id={item.id}
           isPublic={item.isPublic}
           password={item.password}
-          expiration={item.expiration}
+          expire_at={item.expire_at}
+          fetchData={fetchData}
         />
       }
       trigger="hover"

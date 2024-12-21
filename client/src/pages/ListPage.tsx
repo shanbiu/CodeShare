@@ -22,7 +22,7 @@ interface CodeItem {
   snippets: Snippet[];
   tags: string[];
   create_at: string;
-  expiration: string | null; // 允许 null
+  expire_at: string | null; // 允许 null
   markdown: string;
   isPublic: boolean;
   password: string | null; // 允许 null
@@ -43,6 +43,7 @@ export default function CodeList() {
       setLoading(true);
       const response = await axios.get("/api/list"); // 发起请求到后端的 /list 路由
       setCodeData(response.data); // 将返回的数据存储到 state 中
+      console.log("获取数据成功!");
     } catch (err) {
       console.error("获取数据失败:", err);
       setError("获取数据失败，请稍后再试。");
@@ -55,6 +56,8 @@ export default function CodeList() {
   useEffect(() => {
     fetchData();
   }, []); // 组件加载时发起请求
+
+  
 
   // 过滤数据
   const filteredData = codeData.filter((item: CodeItem) => {
@@ -74,9 +77,9 @@ export default function CodeList() {
     return matchesSearch && matchesShareRange && matchesLanguage;
   });
 
-  if (loading) {
-    return <div>加载中...</div>;
-  }
+  // if (loading) {
+  //   return <div>加载中...</div>;
+  // }
 
   if (error) {
     return <div>{error}</div>;
@@ -103,7 +106,10 @@ export default function CodeList() {
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filteredData.map((item) => (
-              <CodeCard key={item.id} item={item} fetchData={fetchData} />
+              <CodeCard key={item.id} 
+              item={item} fetchData={fetchData}
+
+               />
             ))}
           </div>
         </div>

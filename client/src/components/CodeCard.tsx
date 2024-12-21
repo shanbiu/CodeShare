@@ -22,9 +22,11 @@ interface CodeCardProps {
     create_at: string;
     isPublic: boolean;
     password: string | null; // 密码
-    expiration: string | null; // 过期时间
-  };
+    expire_at: string | null; // 过期时间
+    
+  };  
   fetchData: () => void;  // 接收 fetchData 函数
+
 }
 
 export default function CodeCard({ item, fetchData }: CodeCardProps) {
@@ -98,7 +100,10 @@ export default function CodeCard({ item, fetchData }: CodeCardProps) {
       <div className="flex justify-between items-center">
         {/* 使用 CodeTags 组件显示公开状态和标签 */}
         <CodeTags isPublic={isPublic} tags={item.tags} />
-        <SharePopover  item={item} />
+        <SharePopover  
+        item={item}
+        fetchData={fetchData}
+        />
       </div>
     </Card>
   );

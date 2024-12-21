@@ -23,7 +23,7 @@ interface SnippetData {
   snippets: Snippet[];
   tags: string[];
   isPublic: boolean;
-  expiration: string | null;
+  expire_at: string | null;
   create_at: string;
   
 }
@@ -40,7 +40,7 @@ const SnippetCard: React.FC<SnippetCardProps> = ({ snippetData, handleCopy, hand
 
   const formatDate = (dateString: string) => new Date(dateString).toLocaleString();
 
-  const formatExpiration = (expiration: string | null) => expiration ? formatDate(expiration) : '永久';
+  const formatExpire_at = (expire_at: string | null) => expire_at ? formatDate(expire_at) : '永久';
 
   const getEditorLanguage = (language: string) => {
     switch (language.toLowerCase()) {
@@ -131,7 +131,7 @@ const handleEditClick = () => {
       <div className="flex justify-between items-center mt-4">
         <CodeTags isPublic={snippetData.isPublic} tags={snippetData.tags} />
         <div className="text-right">
-          <span>过期时间: {snippetData.expiration ? formatExpiration(snippetData.expiration) : '永久'}</span>
+          <span>过期时间: {snippetData.expire_at ? formatExpire_at(snippetData.expire_at) : '永久'}</span>
         </div>
       </div>
 

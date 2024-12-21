@@ -99,6 +99,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
         });
         if (response.data.success) {
           alert("取消加密成功");
+          
         }
       } else {
         // 加密请求，提交新生成的密码
@@ -116,26 +117,9 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
       }
       setIsModalVisible(false); // 关闭弹窗
       // 刷新当前页面
-      // 获取当前路径
-      const currentPath = window.location.pathname;
+      fetchData();
 
-      // 构造新的路径
-      let newPath = currentPath;
-      if (currentPath.includes("ist")) {
-        window.location.reload();
-      } else {
-        if (isPublic) {
-          // 公开 -> 加密：添加 ?pw=密码
-          newPath += `?pw=${newPassword}`;
-        } else {
-          // 加密 -> 公开：移除密码参数
-          const urlParams = new URLSearchParams(window.location.search);
-          urlParams.delete("pw");
-          newPath = `${currentPath}?${urlParams.toString()}`;
-        }
-        // 跳转到新的路径
-        navigate(`${newPath}`);
-      }
+
     } catch (error) {
       alert("操作失败");
       console.error(error);

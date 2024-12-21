@@ -21,11 +21,11 @@
         "python",
         "list comprehension"
       ],
-      "create_at": "2024-12-18 10:30:00",
-      "expiration": null,
+      "create_at": "2024-12-21 22:08:22",
+      "expire_at": null,
       "markdown": "**Python列表推导式**\n\n这个例子展示了如何使用列表推导式生成平方数列表。",
-      "isPublic": true,
-      "password": null
+      "isPublic": false,
+      "password": "cCUyT"
     },
     {
       "id": "45678901-2345-6789-abcd-ef0123456789",
@@ -49,11 +49,10 @@
         "stream api"
       ],
       "create_at": "2024-12-21 12:38:43",
-      "expiration": null,
+      "expire_at": 1737476814965,
       "markdown": "**Java Stream API示例**\n\n这个例子展示了如何使用Java 8+ 的Stream API来处理集合。",
-      "isPublic": false,
-      "password": "b78DaA",
-      "expire_at": null
+      "isPublic": true,
+      "password": null
     },
     {
       "id": "eoH0W0",
@@ -75,7 +74,7 @@
       "expire_at": null,
       "markdown": "**你好，世界！**",
       "isPublic": true,
-      "password": ""
+      "password": null
     },
     {
       "id": "VsvC9I",
@@ -91,6 +90,24 @@
       "tags": [],
       "create_at": "2024-12-21 12:44:07",
       "expire_at": null,
+      "markdown": "**你好，世界！**",
+      "isPublic": true,
+      "password": null
+    },
+    {
+      "id": "VBi9wB",
+      "title": "代码片段",
+      "snippets": [
+        {
+          "key": "zyZIjU",
+          "language": "javascript",
+          "title": "代码块",
+          "code": "//请输入你的代码"
+        }
+      ],
+      "tags": [],
+      "create_at": "2024-12-22 00:23:16",
+      "expire_at": "2025-01-21 23:46:54",
       "markdown": "**你好，世界！**",
       "isPublic": true,
       "password": ""

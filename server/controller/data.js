@@ -159,7 +159,7 @@ export async function updatePublic(ctx) {
   try {
     const { id } = ctx.params; // 从 URL 参数中获取 ID
     const { isPublic, password } = ctx.request.body; // 获取请求体中的加密状态和密码
-
+    console.log('收到的更新公开状态请求:', id, isPublic, password);
     // 加载数据库
     const db = await loadDB(); // 假设 loadDB() 是加载数据库的方法
 
@@ -168,7 +168,6 @@ export async function updatePublic(ctx) {
 
     if (index !== -1) {
       const codeShare = db.data.code_shares[index];
-      // console.log('收到的更新请求:', id, isPublic, password);
 
       // 如果要切换到公开状态
       if (!isPublic) {
@@ -187,7 +186,7 @@ export async function updatePublic(ctx) {
         await db.write();
 
         ctx.status = 200;
-        ctx.body = { message: '成功切换为公开' };
+        ctx.body = { message: 'success',success: true };
       } else {
         // 如果要切换到加密状态，更新密码
         codeShare.isPublic = false;
@@ -197,7 +196,7 @@ export async function updatePublic(ctx) {
         await db.write();
 
         ctx.status = 200;
-        ctx.body = { message: '成功切换为加密' };
+        ctx.body = { message: 'success' ,success: true };
       }
     } else {
       ctx.status = 404;
@@ -210,3 +209,51 @@ export async function updatePublic(ctx) {
   }
 }
 
+export async function updateExpiration(ctx) {
+  try {
+    const { id } = ctx.params; // 从 URL 参数中获取 ID
+    const { password, expire_at } = ctx.request.body; // 获取请求体中的密码和过期时间
+    console.log('收到的更新过期时间请求:', id, password, expire_at);
+
+    // 如果 expire_at 为 null，则不进行格式验证，直接赋值为 null
+    if (expire_at !== null && isNaN(new Date(expire_at).getTime())) {
+      ctx.status = 400;
+      ctx.body = { message: '无效的过期时间格式。' };
+      return;
+    }
+
+    // 加载数据库
+    const db = await loadDB();
+
+    // 查找要更新的数据
+    const index = db.data.code_shares.findIndex(item => item.id === id);
+
+    if (index !== -1) {
+      const codeShare = db.data.code_shares[index];
+
+      // 如果数据是加密的且传入了密码，验证密码
+      if (!codeShare.isPublic && codeShare.password !== password) {
+        ctx.body = { message: '密码错误，无法修改过期时间。' };
+        ctx.status = 403; // Forbidden
+        return;
+      }
+
+      // 更新过期时间，如果 expire_at 为 null，则直接赋值为 null
+      codeShare.expire_at = expire_at === null ? null : new Date(expire_at).getTime();
+
+      // 保存更新后的数据
+      await db.write();
+
+      ctx.status = 200;
+      ctx.body = { success: true, message: '过期时间更新成功' };
+    } else {
+      ctx.status = 404;
+      ctx.body = { message: '数据未找到' };
+    }
+
+  } catch (error) {
+    console.error('更新过期时间失败:', error);
+    ctx.status = 500;
+    ctx.body = { message: '服务器错误' };
+  }
+}

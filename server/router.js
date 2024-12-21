@@ -1,6 +1,6 @@
 
 import Router from 'koa-router';
-import { getAllData, getData , addData, deleteData, updateData, updatePublic } from './controller/data.js';
+import { getAllData, getData , addData, deleteData, updateData, updatePublic,updateExpiration } from './controller/data.js';
 import { downloadCodeShare } from './controller/download.js';
 
 const router = new Router();
@@ -12,4 +12,5 @@ router.delete('/delete/:id', deleteData);
 router.put('/update/:id', updateData);
 router.patch('/updatePublic/:id', updatePublic);
 router.get('/download/:id', downloadCodeShare);
+router.patch('/updateExpiration/:id', updateExpiration);
 export default router;
