@@ -1,5 +1,6 @@
 import { loadDB } from '../service/database.js';
 
+
 export async function getData(ctx) {
   try {
     // 获取查询参数中的密码 
@@ -208,3 +209,4 @@ export async function updatePublic(ctx) {
     ctx.body = { message: '服务器错误' };
   }
 }
+
