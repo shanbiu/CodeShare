@@ -78,7 +78,17 @@ const SnippetCard: React.FC<SnippetCardProps> = ({ snippetData, handleCopy, hand
       </div>
     ),
   }));
-
+// 处理编辑按钮的点击事件
+const handleEditClick = () => {
+  if (snippetData.password) {
+    // 如果有密码，带上密码参数跳转
+    navigate(`/edit/${snippetData.id}?pw=${snippetData.password}`);
+  } else {
+    // 如果没有密码，直接跳转
+    navigate(`/edit/${snippetData.id}`);
+  }
+};
+  
     // 删除后的跳转函数
     const handleDelete = () => {
       if (snippetData.id) {
@@ -97,11 +107,11 @@ const SnippetCard: React.FC<SnippetCardProps> = ({ snippetData, handleCopy, hand
               {snippetData.isPublic ? (
                 <UnlockOutlined className="ml-2" style={{ color: 'green' }} />
               ) : (
-                <LockOutlined className="ml-2" style={{ color: 'orange' }} />
+                <LockOutlined className="ml-2" style={{ color: 'red' }} />
               )}
             </div>
             <Space>
-              <Button type="link" icon={<EditOutlined />} size="small">编辑</Button>
+            <Button type="link" icon={<EditOutlined />} size="small" onClick={handleEditClick}>编辑</Button>
               <Button type="link" icon={<ShareAltOutlined />} size="small">分享</Button>
             </Space>
           </div>
@@ -125,7 +135,7 @@ const SnippetCard: React.FC<SnippetCardProps> = ({ snippetData, handleCopy, hand
         </div>
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop:'12px'}}>
         <div>
           创建时间: {formatDate(snippetData.create_at)}
         </div>
@@ -135,7 +145,6 @@ const SnippetCard: React.FC<SnippetCardProps> = ({ snippetData, handleCopy, hand
           id ={snippetData.id}
           password={snippetData.password}
           fetchData={handleDelete}
-
         />
       </div>
     </Card>

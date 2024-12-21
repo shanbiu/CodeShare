@@ -9,6 +9,6 @@ router.get('/list', getAllData);
 router.post('/submit', addData);
 router.delete('/delete/:id', deleteData);
 router.put('/update/:id', updateData);
-router.put('/updatePublic/:id', updatePublic);
+router.patch('/updatePublic/:id', updatePublic);
 
 export default router;

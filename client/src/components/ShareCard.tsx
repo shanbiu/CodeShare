@@ -75,7 +75,7 @@ const ShareCard: React.FC<ShareCardProps> = ({ id, isPublic, password, expiratio
       <div>
 
         <Input
-          value={`http://localhost:3000/code/${id}?pw=${generatedPassword || ''}`}
+          value={`http://localhost:3000/code/${id}${generatedPassword ? `?pw=${generatedPassword}` : ''}`}
           readOnly
           style={{ width: 250 }}
         />

@@ -24,8 +24,8 @@
       "create_at": "2024-12-18 10:30:00",
       "expiration": null,
       "markdown": "**Python列表推导式**\n\n这个例子展示了如何使用列表推导式生成平方数列表。",
-      "isPublic": false,
-      "password": "py1234"
+      "isPublic": true,
+      "password": null
     },
     {
       "id": "45678901-2345-6789-abcd-ef0123456789",
@@ -39,7 +39,7 @@
         },
         {
           "key": "77889900-aabb-ccdd-eeff-112233445566",
-          "language": "python",
+          "language": "java",
           "title": "并行Stream API",
           "code": "import java.util.Arrays;\nimport java.util.List;\n\npublic class ParallelStreamExample {\n    public static void main(String[] args) {\n        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);\n        \n        int sum = numbers.parallelStream()\n                          .filter(n -> n % 2 == 0)\n                          .mapToInt(Integer::intValue)\n                          .sum();\n        \n        System.out.println(\"Sum of even numbers (parallel): \" + sum);\n    }\n}"
         }
@@ -48,11 +48,12 @@
         "java",
         "stream api"
       ],
-      "create_at": "2024-12-19 14:45:00",
+      "create_at": "2024-12-21 12:38:43",
       "expiration": null,
       "markdown": "**Java Stream API示例**\n\n这个例子展示了如何使用Java 8+ 的Stream API来处理集合。",
-      "isPublic": true,
-      "password": null
+      "isPublic": false,
+      "password": "b78DaA",
+      "expire_at": null
     },
     {
       "id": "eoH0W0",
@@ -77,36 +78,18 @@
       "password": ""
     },
     {
-      "id": "DmoIdo",
-      "title": "代码标题",
-      "snippets": [
-        {
-          "key": "EhuRWu",
-          "language": "javascript",
-          "title": "代码块",
-          "code": "//111"
-        }
-      ],
-      "tags": [],
-      "create_at": "2024-12-20 16:38:11",
-      "expire_at": null,
-      "markdown": "**你好，世界！**",
-      "isPublic": false,
-      "password": ""
-    },
-    {
-      "id": "Tu8i0l",
+      "id": "VsvC9I",
       "title": "代码片段",
       "snippets": [
         {
-          "key": "b7quwy",
+          "key": "CZcFZk",
           "language": "javascript",
           "title": "代码块",
-          "code": "//113915"
+          "code": "//请输入你的代码"
         }
       ],
       "tags": [],
-      "create_at": "2024-12-20 16:39:36",
+      "create_at": "2024-12-21 12:44:07",
       "expire_at": null,
       "markdown": "**你好，世界！**",
       "isPublic": true,

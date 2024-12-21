@@ -53,13 +53,9 @@ function CreatePage() {
 useEffect(() => {
   if (code_id) {
     setId(code_id); // 更新 id
-    console.log('编辑模式', code_id);
-    console.log('密码', queryPassword);
     const fetchData = async () => {
       try {
-        console.log('开始');
         setLoading(true);
-        console.log('开始2');
         // 判断是否有密码查询参数
         const url = queryPassword
           ? `/api/code/${code_id}?pw=${queryPassword}`  // 如果有密码参数，拼接上密码
@@ -67,7 +63,7 @@ useEffect(() => {
         const response = await axios.get(url);
         setCodeData(response.data);
         const { title, snippets, tags, markdown, isPublic, password: dbPassword, expireAt, createAt } = response.data;
-        console.log('正确密码', dbPassword)
+
         if (!isPublic && queryPassword !== dbPassword) {
           notification.error({
             message: '密码错误',

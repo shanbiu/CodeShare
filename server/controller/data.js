@@ -156,58 +156,51 @@ export async function updateData(ctx) {
 
 export async function updatePublic(ctx) {
   try {
-    const { id } = ctx.params;
-    const { pw } = ctx.query; // 获取查询参数中的密码
+    const { id } = ctx.params; // 从 URL 参数中获取 ID
     const { isPublic, password } = ctx.request.body; // 获取请求体中的加密状态和密码
 
-    // 查找对应的 codeShare 数据
-    const codeShare = codeShares[id];
+    // 加载数据库
+    const db = await loadDB(); // 假设 loadDB() 是加载数据库的方法
 
-    if (!codeShare) {
-      ctx.status = 404;
-      ctx.body = { message: '未找到指定的代码片段' };
-      return;
-    }
+    // 查找要更新的 codeShare 数据
+    const index = db.data.code_shares.findIndex(item => item.id === id);
 
-    // 如果要切换到公开状态
-    if (isPublic) {
-      // 从加密切换到公开，清空密码
-      codeShare.isPublic = true;
-      codeShare.password = ""; // 清空密码字段
+    if (index !== -1) {
+      const codeShare = db.data.code_shares[index];
+      // console.log('收到的更新请求:', id, isPublic, password);
 
-      ctx.status = 200;
-      ctx.body = { message: '成功切换为公开' };
-    } else {
-      // 如果要切换到加密状态，验证密码
-      if (codeShare.isPublic) {
-        // 当前是公开状态，要切换为加密状态，且需要设置新密码
-        if (!password || password.length < 4 || password.length > 8) {
-          ctx.status = 400;
-          ctx.body = { message: '密码长度应在4到8个字符之间' };
-          return;
-        }
-
-        // 设置新的密码
-        codeShare.isPublic = false;
-        codeShare.password = password; // 更新密码字段
-
-        ctx.status = 200;
-        ctx.body = { message: '成功切换为加密' };
-      } else {
-        // 当前是加密状态，需要验证密码才能取消加密
-        if (codeShare.password !== pw) {
+      // 如果要切换到公开状态
+      if (!isPublic) {
+        // 从加密切换到公开，首先验证密码
+        if (codeShare.password !== password) {
           ctx.status = 403; // 密码错误
           ctx.body = { message: '密码错误，无法切换状态' };
           return;
         }
 
-        // 密码验证通过，切换为公开状态并清空密码
+        // 如果密码正确，切换为公开并清空密码
         codeShare.isPublic = true;
-        codeShare.password = ""; // 清空密码字段
+        codeShare.password = null; // 清空密码字段
+
+        // 保存更新后的数据
+        await db.write();
 
         ctx.status = 200;
         ctx.body = { message: '成功切换为公开' };
+      } else {
+        // 如果要切换到加密状态，更新密码
+        codeShare.isPublic = false;
+        codeShare.password = password; // 更新密码字段
+
+        // 保存更新后的数据
+        await db.write();
+
+        ctx.status = 200;
+        ctx.body = { message: '成功切换为加密' };
       }
+    } else {
+      ctx.status = 404;
+      ctx.body = { message: '未找到指定的代码片段' };
     }
   } catch (error) {
     console.error('更新隐私状态失败:', error);
