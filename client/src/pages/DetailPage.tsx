@@ -36,12 +36,11 @@ export default function DetailPage() {
 
   const handleCopy = (code: string) => {
     navigator.clipboard.writeText(code);
+    alert('复制成功');
     // 这里可以加入 Toast 提示复制成功
   };
 
-  const handleMenuClick = (action: string) => {
-    console.log(action);
-  };
+
 
 
   return (
@@ -54,7 +53,6 @@ export default function DetailPage() {
             <SnippetCard
               snippetData={snippetData}
               handleCopy={handleCopy}
-              handleMenuClick={handleMenuClick}
               fetchData={fetchData}
             />
           )}
