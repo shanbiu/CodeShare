@@ -29,7 +29,6 @@ const ShareCard: React.FC<ShareCardProps> = ({
   expire_at,
   fetchData,
 }) => {
-  const [inputValue] = useState(id);
   const [generatedPassword, setGeneratedPassword] = useState<string | null>(
     password || null
   );
@@ -38,18 +37,18 @@ const ShareCard: React.FC<ShareCardProps> = ({
   ); // 使用 day.js 处理过期时间
   const [shareStatus, setShareStatus] = useState(
     isPublic ? "public" : "private"
-  ); // 默认分享状态
+  ); 
 
   // 更新分享范围
   const handleShareStatusChange = async (value: string) => {
-    const newShareStatus = value === "public"; // 根据选择的值更新分享状态
+    const newShareStatus = value === "public"; 
     setShareStatus(value);
     try {
       if (newShareStatus) {
         // 加密，带上当前密码
         const response = await axios.patch(`/api/updatePublic/${id}`, {
           isPublic: !newShareStatus,
-          password: generatedPassword, // 传递当前密码
+          password: generatedPassword, 
         });
 
         if (response.data.success) {
@@ -57,11 +56,11 @@ const ShareCard: React.FC<ShareCardProps> = ({
           fetchData(id);
         }
       } else {
-        // newExpireAt
-        const newPassword = UniqueCode(); // 生成新密码
+        
+        const newPassword = UniqueCode();
         const response = await axios.patch(`/api/updatePublic/${id}`, {
           isPublic: !newShareStatus,
-          password: newPassword, // 提交新密码
+          password: newPassword, 
         });
         if (response.data.success) {
           setGeneratedPassword(newPassword); // 更新密码状态
@@ -103,9 +102,9 @@ const ShareCard: React.FC<ShareCardProps> = ({
       });
   };
 
-  // 假设二维码内容就是 ID
+  // 二维码内容
   const qrCodeContent = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
-    inputValue
+    `http://localhost:${currentPort}/code/${id}${generatedPassword ? `?pw=${generatedPassword}` : ""}`
   )}&size=100x100`;
 
   // 提交过期时间
@@ -115,23 +114,23 @@ const ShareCard: React.FC<ShareCardProps> = ({
     newExpireAt: dayjs.Dayjs | null
   ) => {
     if (!newExpireAt) {
-      newExpireAt = null; // 或者传递一个特定值，比如 `null` 表示永久有效
+      newExpireAt = null;
     }
     setExpireAt(newExpireAt); // 更新本地状态
-    // 格式化日期，确保发送的是正确的格式
+    // 格式化日期
     const formattedExpireAt = newExpireAt
       ? dayjs(newExpireAt).format("YYYY-MM-DD HH:mm:ss")
-      : null; // 如果没有过期时间，设置为 null
+      : null; 
     try {
       const response = await axios.patch(`/api/updateExpiration/${id}`, {
         password,
-        expire_at: formattedExpireAt, // 使用格式化的日期
+        expire_at: formattedExpireAt, 
       });
 
       if (response.data.success) {
         message.success("过期时间已更新");
         const pw = password ? password : undefined;
-        fetchData(id, pw); // 重新加载数据
+        fetchData(id, pw); 
       } else {
         message.error("更新过期时间失败");
       }
@@ -158,11 +157,11 @@ const ShareCard: React.FC<ShareCardProps> = ({
           />
         </Tooltip>
         <Popover
-          content={<img src={qrCodeContent} className="w-32 h-auto" />} // 使用 Tailwind 设置宽度
+          content={<img src={qrCodeContent} className="w-32 h-auto" />}
           title={<></>}
           trigger="hover"
           placement="left"
-          overlayStyle={{ maxWidth: "128px" }} // 设置弹出层的最大宽度
+          overlayStyle={{ maxWidth: "128px" }} 
         >
           <Button icon={<QrcodeOutlined />} type="text" />
         </Popover>
@@ -197,7 +196,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
                 type="link"
                 onClick={() => {
                   const newPassword = UniqueCode();
-                  setGeneratedPassword(newPassword); // 更新本地密码
+                  setGeneratedPassword(newPassword); 
                 }}
               >
                 生成密码
@@ -231,7 +230,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
                     size="small"
                     onClick={(e) => {
                       e.stopPropagation(); // 阻止事件冒泡
-                      // 更新过期时间为快捷选择的时间
+                    
                       handleExpireTimeChange(
                         id,
                         generatedPassword,

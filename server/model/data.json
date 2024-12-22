@@ -138,6 +138,24 @@
       "markdown": "**你好，世界！**",
       "isPublic": true,
       "password": null
+    },
+    {
+      "id": "ttkFjR",
+      "title": "代码片段",
+      "snippets": [
+        {
+          "key": "X20Bm",
+          "language": "javascript",
+          "title": "代码块",
+          "code": "//请输入你的代码"
+        }
+      ],
+      "tags": [],
+      "create_at": "2024-12-23 04:39:11",
+      "expire_at": null,
+      "markdown": "**你好，世界！**",
+      "isPublic": true,
+      "password": null
     }
   ]
 }
