@@ -84,7 +84,7 @@ export async function deleteData(ctx) {
     console.log('收到删除请求');
     const { id } = ctx.params; // 从 URL 参数中获取 ID
     console.log('要删除的数据ID:', id);
-    const { pw } = ctx.query; // 从查询参数中获取密码
+    const pw = ctx.request.url.split('?pw=')[1]; // 从查询参数中获取密码
     console.log('要删除的数据密码:', pw);
 
     // 加载数据库

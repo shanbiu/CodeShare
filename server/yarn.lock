@@ -1364,6 +1364,13 @@ koa@^2.14.2:
     type-is "^1.6.16"
     vary "^1.1.2"
 
+koa2-history-api-fallback@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.npmmirror.com/koa2-history-api-fallback/-/koa2-history-api-fallback-0.1.0.tgz"
+  integrity sha512-8arvss84gQvJgw1S0wGUE0ZDyIUJW8x3OaH1hirgQlOSfLn98Xc459gIqzrKMqTwK7SXhOs91ISQWEKb738v0g==
+  dependencies:
+    url "^0.11.0"
+
 lazystream@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmmirror.com/lazystream/-/lazystream-1.0.1.tgz"
@@ -1634,12 +1641,17 @@ pstree.remy@^1.1.8:
   resolved "https://registry.npmmirror.com/pstree.remy/-/pstree.remy-1.1.8.tgz"
   integrity sha512-77DZwxQmxKnu3aR542U+X8FypNzbfJ+C5XQDk3uWjWxn6151aIMGthWYRXTqT1E5oJvg+ljaa2OJi+VfvCOQ8w==
 
+punycode@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.npmmirror.com/punycode/-/punycode-1.4.1.tgz"
+  integrity sha512-jmYNElW7yvO7TV33CjSmvSiE2yco3bV2czu/OzDKdMNVZQWfxCblURLhf+47syQRBntjfLdd/H0egrzIG+oaFQ==
+
 punycode@^2.1.0:
   version "2.3.1"
   resolved "https://registry.npmmirror.com/punycode/-/punycode-2.3.1.tgz"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-qs@^6.11.0, qs@^6.5.2, qs@^6.9.4:
+qs@^6.11.0, qs@^6.12.3, qs@^6.5.2, qs@^6.9.4:
   version "6.13.1"
   resolved "https://registry.npmmirror.com/qs/-/qs-6.13.1.tgz"
   integrity sha512-EJPeIn0CYrGu+hli1xilKAPXODtJ12T0sP63Ijx2/khC2JtuaN3JyNIpvmnkmaEtha9ocbG4A4cMcr+TvqvwQg==
@@ -2040,6 +2052,14 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+url@^0.11.0:
+  version "0.11.4"
+  resolved "https://registry.npmmirror.com/url/-/url-0.11.4.tgz"
+  integrity sha512-oCwdVC7mTuWiPyjLUz/COz5TLk6wgp0RCsN+wHZ2Ekneac9w8uuV0njcbbie2ME+Vs+d6duwmYuR3HgQXs1fOg==
+  dependencies:
+    punycode "^1.4.1"
+    qs "^6.12.3"
 
 util-deprecate@~1.0.1:
   version "1.0.2"

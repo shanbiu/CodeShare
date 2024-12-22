@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Card, Divider, message, Popover, Tag } from 'antd';
-import { ShareAltOutlined, EllipsisOutlined, LockOutlined, UnlockOutlined } from '@ant-design/icons';
+import { Card} from 'antd';
+import {  LockOutlined, UnlockOutlined } from '@ant-design/icons';
 import Editor from "@monaco-editor/react";
-import ShareCard from './ShareCard'; // 引入新的 ShareCard 组件
-import { useTheme } from './ThemeProvider'; // 引入 useTheme 钩子
-import ActionMenu from './ActionMenu'; // 引入新的 ActionMenu 组件
-import CodeTags from './CodeTags'; // 引入新的 CodeTags 组件
-import { useNavigate } from 'react-router-dom'; // 引入 useNavigate
-import SharePopover from './SharePopover';  // 导入 SharePopover 组件
+import { useTheme } from './ThemeProvider'; 
+import ActionMenu from './ActionMenu'; 
+import CodeTags from './CodeTags'; 
+import { useNavigate } from 'react-router-dom'; 
+import SharePopover from './SharePopover';  
 interface CodeCardProps {
   item: {
     id: string;
@@ -18,28 +17,28 @@ interface CodeCardProps {
       title: string;
       code: string;
     }>;
-    tags: string[];  // 这里的 tags 用来显示标签
+    tags: string[]; 
     create_at: string;
     isPublic: boolean;
-    password: string | null; // 密码
-    expire_at: string | null; // 过期时间
+    password: string | null; 
+    expire_at: string | null; 
     
   };  
-  fetchData: () => void;  // 接收 fetchData 函数
+  fetchData: () => void;  
 
 }
 
 export default function CodeCard({ item, fetchData }: CodeCardProps) {
   const [isPublic, setIsPublic] = useState(item.isPublic);
-  const { isDarkMode } = useTheme(); // 获取当前主题
-  const navigate = useNavigate(); // 获取跳转函数
+  const { isDarkMode } = useTheme(); 
+  const navigate = useNavigate();
 
-  // 动态设置 Monaco Editor 主题
+  // 设置 Monaco Editor 主题
   const editorTheme = isDarkMode ? 'vs-dark' : 'vs';
 
   // 跳转到代码详情页面
   const handleCardClick = () => {
-    // 跳转到代码详情页面，传递 id 和 password 参数
+
     if (item.password) {
       navigate(`/code/${item.id}?pw=${item.password}`);
     } else {
@@ -49,7 +48,7 @@ export default function CodeCard({ item, fetchData }: CodeCardProps) {
 
   return (
     <Card
-      className="w-full shadow-md cursor-pointer" // 使卡片区域可点击
+      className="w-full shadow-md cursor-pointer" 
       title={
         <div>
           <div className="flex items-center mt-3">

@@ -56,7 +56,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
       }
     } catch (error) {
       alert("加密失败");
-      console.error(error);
+
     }
   };
 
@@ -100,8 +100,6 @@ const ShareCard: React.FC<ShareCardProps> = ({
     const formattedExpireAt = newExpireAt
       ? dayjs(newExpireAt).format("YYYY-MM-DD HH:mm:ss") 
       : null; // 如果没有过期时间，设置为 null
-    console.log("password", password);
-    console.log("formattedExpireAt", formattedExpireAt);
     try {
       const response = await axios.patch(`/api/updateExpiration/${id}`, {
         password,
@@ -110,12 +108,12 @@ const ShareCard: React.FC<ShareCardProps> = ({
   
       if (response.data.success) {
         message.success("过期时间已更新");
-        fetchData(); // 重新加载数据
+        let pw=password?password:undefined
+        fetchData(id,pw ); // 重新加载数据
       } else {
         message.error("更新过期时间失败");
       }
     } catch (error) {
-      console.error("更新过期时间失败", error);
       message.error("更新过期时间失败");
     }
   };

@@ -16,16 +16,8 @@ import { useNavigate } from "react-router-dom"; // 引入 useNavigate
 import SharePopover from "./SharePopover"; // 引入 SharePopover 组件
 import MarkdownIt from "markdown-it";
 import markdownItUnderline from "markdown-it-underline"; // 引入下划线插件
-import Clipboard from "clipboard"; // 用于处理复制
+import hljs from "highlight.js";
 
-import hljs from "highlight.js/lib/core";
-import javascript from "highlight.js/lib/languages/javascript";
-import python from "highlight.js/lib/languages/python";
-import java from "highlight.js/lib/languages/java";
-// Then register the languages you need
-hljs.registerLanguage("javascript", javascript);
-hljs.registerLanguage("python", python);
-hljs.registerLanguage("java", java);
 
 interface Snippet {
   key: string;
@@ -75,7 +67,7 @@ const SnippetCard: React.FC<SnippetCardProps> = ({
     }
   };
 
-  const handleDelete = () => {
+  const navigateToHome = () => {
     if (snippetData.id) {
       navigate("/"); // 删除后跳转到根路由
     }
@@ -240,7 +232,8 @@ const SnippetCard: React.FC<SnippetCardProps> = ({
           isPublic={snippetData.isPublic}
           id={snippetData.id}
           password={snippetData.password}
-          fetchData={handleDelete}
+          navigateToHome={navigateToHome}
+          fetchData={fetchData}
         />
       </div>
     </Card>

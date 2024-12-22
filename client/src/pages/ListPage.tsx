@@ -4,9 +4,9 @@ import SearchBar from "../components/SearchBar";
 import Filters from "../components/Filters";
 import Header from "../components/Header";
 import CodeCard from "../components/CodeCard";
-import axios from "axios"; // 引入 axios
-import ThemeSwitcher from "../components/ThemeSwitcher"; // 引入 ThemeSwitcher
-import { useTheme } from "../components/ThemeProvider"; // 导入 useTheme 钩子
+import axios from "axios"; 
+import ThemeSwitcher from "../components/ThemeSwitcher"; 
+import { useTheme } from "../components/ThemeProvider"; 
 
 
 interface Snippet {
@@ -22,33 +22,29 @@ interface CodeItem {
   snippets: Snippet[];
   tags: string[];
   create_at: string;
-  expire_at: string | null; // 允许 null
+  expire_at: string | null; 
   markdown: string;
   isPublic: boolean;
-  password: string | null; // 允许 null
+  password: string | null; 
 }
 
 export default function CodeList() {
-  const { isDarkMode } = useTheme(); // 使用 theme 的状态
+  const { isDarkMode } = useTheme();
   const [searchTerm, setSearchTerm] = useState("");
   const [shareRange, setShareRange] = useState("all");
   const [language, setLanguage] = useState("all");
   const [codeData, setCodeData] = useState<CodeItem[]>([]); // 存储从后端获取的数据
-  const [loading, setLoading] = useState(true); // 数据加载状态
-  const [error, setError] = useState<string | null>(null); // 错误状态
 
   // 获取数据函数
   const fetchData = async () => {
     try {
-      setLoading(true);
-      const response = await axios.get("/api/list"); // 发起请求到后端的 /list 路由
-      setCodeData(response.data); // 将返回的数据存储到 state 中
+      const response = await axios.get("/api/list"); 
+      setCodeData(response.data); 
       console.log("获取数据成功!");
     } catch (err) {
-      console.error("获取数据失败:", err);
-      setError("获取数据失败，请稍后再试。");
+ 
     } finally {
-      setLoading(false); // 请求完成
+
     }
   };
 
@@ -56,8 +52,6 @@ export default function CodeList() {
   useEffect(() => {
     fetchData();
   }, []); // 组件加载时发起请求
-
-  
 
   // 过滤数据
   const filteredData = codeData.filter((item: CodeItem) => {
@@ -77,13 +71,8 @@ export default function CodeList() {
     return matchesSearch && matchesShareRange && matchesLanguage;
   });
 
-  // if (loading) {
-  //   return <div>加载中...</div>;
-  // }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'bg-neutral-800' : 'bg-gray-100'}`}>

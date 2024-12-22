@@ -35,7 +35,7 @@ export function SubmitButtons({
     onPasswordChange(result);
     setGeneratedPassword(result);
     setStoredPassword(result); // 暂存密码也更新
-    console.log("Generated password: ", result);
+
   };
 
   // 提交处理函数

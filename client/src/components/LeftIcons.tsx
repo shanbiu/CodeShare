@@ -30,7 +30,7 @@ const LeftIcons: React.FC<LeftIconsProps> = ({ item, fetchData }) => {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('下载失败', error);
+      // console.error('下载失败', error);
       alert('下载失败，请稍后重试');
     }
   };

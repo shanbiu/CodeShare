@@ -72,7 +72,7 @@ useEffect(() => {
         setExpireAt(expireAt ? dayjs(expireAt) : null);
         setActiveSnippet(snippets[0].key); // 设置第一个代码块为活动代码块
       } catch (error) {
-        console.error('加载数据失败', error);
+        // console.error('加载数据失败', error);
       } finally {
         setLoading(false);
       }
@@ -114,7 +114,7 @@ useEffect(() => {
   };
 
   const handleTitleChange = (newTitle: string) => {
-    setTitle(newTitle || '代码标题');
+    setTitle(newTitle || '代码片段');
   };
    // 判断是否为编辑模式
    const isEditMode = !!code_id; // 如果 code_id 存在，则为编辑模式
@@ -137,23 +137,21 @@ useEffect(() => {
         // 编辑模式，更新已有数据
         console.log("Updating data to:", '/api/update');
         const response = await axios.put(`/api/update/${id}`, submittedData);
-        console.log("Response:", response);
         notification.success({
           message: '更新成功',
           description: '代码片段已成功更新。',
         });
       } else {
         // 新建模式，提交新数据
-        console.log("Creating new data to:", '/api/submit');
+
         const response = await axios.post('/api/submit', submittedData);
-        console.log("Response:", response);
         notification.success({
           message: '创建成功',
           description: '代码片段已成功创建。',
         });
       }
     } catch (error) {
-      console.error('提交失败:', error);
+      // console.error('提交失败:', error);
       notification.error({
         message: '提交失败',
         description: '出现错误，请稍后再试。',
