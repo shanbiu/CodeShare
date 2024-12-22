@@ -1,12 +1,7 @@
 import { loadDB } from '../service/database.js';
-import path from 'path';
-import fs from 'fs';
 import archiver from 'archiver';
-import koaSend from 'koa-send';
+import { PassThrough } from 'stream';
 
-// 获取当前文件所在目录的路径，并确保拼接正确
-const tempDir = path.resolve('model', 'temp');
-console.log('临时目录路径:', tempDir);  // 打印临时目录路径
 
 // 文件名清理函数
 function sanitizeFileName(fileName) {
@@ -18,10 +13,6 @@ const languageToExtension = {
     'java': '.java',
     'javascript': '.js',
     'python': '.py',
-    'html': '.html',
-    'css': '.css',
-    'json': '.json',
-    'text': '.txt',
 }
 
 export async function downloadCodeShare(ctx) {
@@ -44,7 +35,8 @@ export async function downloadCodeShare(ctx) {
         }
 
         const title = result.title;
-        console.log('代码分享标题:', title);
+        const sanitizedTitle = sanitizeFileName(title); 
+        console.log('代码分享标题:', sanitizedTitle);
 
         // 检查是否过期
         const currentTimestamp = Date.now();
@@ -63,48 +55,36 @@ export async function downloadCodeShare(ctx) {
             return;
         }
 
-        // 创建临时目录
-        if (!fs.existsSync(tempDir)) {
-            fs.mkdirSync(tempDir, { recursive: true });
-            console.log('临时目录已创建:', tempDir);
-        } else {
-            console.log('临时目录已存在:', tempDir);
-        }
-
-        const sanitizedTitle = sanitizeFileName(title); // 替换文件名中的空格为下划线
-        const zipFilePath = path.join(tempDir, `${sanitizedTitle}.zip`);
-        console.log('压缩包的路径:', zipFilePath);  // 打印压缩包路径
-
-        const output = fs.createWriteStream(zipFilePath);
         const archive = archiver('zip', { zlib: { level: 9 } });
 
         // 监听压缩包错误
         archive.on('error', (err) => {
-            throw err;
+            ctx.status = 500;
+            ctx.body = { message: '压缩包创建失败', error: err.message };
         });
+        archive.on("end", function () {
+            
+            console.log("Archive wrote %d bytes", archive.pointer());
+          });
 
-        archive.pipe(output);
+        
+        ctx.body= new PassThrough();
+
+        archive.pipe(ctx.body);
+
 
         // 添加文件（假设 snippets 是一个数组，里面包含所有代码片段）
         result.snippets.forEach((snippet, index) => {
             const extension = languageToExtension[snippet.language] || '.txt'; // 默认是.txt
             const fileName = `${sanitizeFileName(snippet.title || `snippet_${index + 1}`)}${extension}`;
-            const filePath = path.join(tempDir, fileName);
-            console.log(`创建临时文件路径: ${filePath}`);  // 打印临时文件路径
-
-            fs.writeFileSync(filePath, snippet.code);
-
-            archive.file(filePath, { name: fileName });
+            // const filePath = path.join(tempDir, fileName);
+            // console.log(`创建临时文件路径: ${filePath}`);  // 打印临时文件路径
+            const fileContent = snippet.code;
+            archive.append(fileContent, { name: fileName });
         });
-
-        // 完成压缩
-        await archive.finalize();
+         // 完成压缩
+        archive.finalize();
         console.log('压缩包创建完成');
-
-        // 使用 koa-send 发送文件
-        let relativePath = path.join('model', 'temp', sanitizedTitle + '.zip');
-        await koaSend(ctx, relativePath);
-        console.log('文件发送完成');
     } catch (error) {
         console.error('下载文件失败:', error);
         ctx.status = 500;
@@ -118,15 +98,6 @@ export async function downloadCodeShare(ctx) {
                 console.log('数据库连接已关闭');
             }
 
-            // 文件删除处理，只有当文件成功发送（没有抛出异常走到finally块）才尝试删除临时文件和文件夹
-            try {
-                if (fs.existsSync(tempDir)) {
-                    await fs.promises.rm(tempDir, { recursive: true, force: true });
-                    console.log('临时文件夹已删除');
-                }
-            } catch (deleteError) {
-                console.error('删除临时文件夹及文件失败:', deleteError);
-            }
         }, 10000);
     }
 }
