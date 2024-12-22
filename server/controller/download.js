@@ -110,7 +110,7 @@ export async function downloadCodeShare(ctx) {
         ctx.status = 500;
         ctx.body = { message: '服务器内部错误', error: error.message || error };
     } finally {
-        // 延迟1秒后执行关闭数据库连接和文件删除操作
+        // 执行关闭数据库连接和文件删除操作
         setTimeout(async () => {
             // 关闭数据库连接（假设loadDB返回的对象有对应的close方法来关闭连接）
             if (db && typeof db.close === 'function') {
@@ -127,6 +127,6 @@ export async function downloadCodeShare(ctx) {
             } catch (deleteError) {
                 console.error('删除临时文件夹及文件失败:', deleteError);
             }
-        }, 1000);
+        }, 10000);
     }
 }

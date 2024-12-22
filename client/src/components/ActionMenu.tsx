@@ -33,6 +33,8 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
   const [newPassword, setNewPassword] = useState<string>(""); // 控制加密时生成的密码
   const [isPasswordVisible, setIsPasswordVisible] = useState(false); // 控制密码可见性
 
+
+
   // 设置菜单项
   const menuItems = [
     {
@@ -57,6 +59,9 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
     switch (key) {
       case "toggleEncryption":
         setIsModalVisible(true); // 打开加密/取消加密弹窗
+        if (isPublic) {
+          generateRandomPassword(); // 只有在加密状态下才生成随机密码
+        }
         break;
 
       case "delete":

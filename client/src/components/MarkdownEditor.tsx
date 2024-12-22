@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { Button, Space, Tooltip } from "antd";
 import {
   BoldOutlined,
@@ -20,8 +20,10 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import MarkdownIt from "markdown-it";
+import markdownItUnderline from "markdown-it-underline"; // 引入下划线插件
 
-const md = new MarkdownIt();
+// 初始化 MarkdownIt 实例，允许解析 HTML 标签，并使用 markdown-it-underline 插件
+const md = new MarkdownIt({ html: true }).use(markdownItUnderline); 
 
 interface MarkdownEditorProps {
   markdown: string;
@@ -65,7 +67,7 @@ export function MarkdownEditor({ markdown, setMarkdown }: MarkdownEditorProps) {
     { title: "标题", icon: <span className="font-bold text-base">H</span>, action: () => insertMarkdown("# ") },
     { title: "加粗", icon: <BoldOutlined />, action: () => insertMarkdown("**", "**") },
     { title: "斜体", icon: <ItalicOutlined />, action: () => insertMarkdown("*", "*") },
-    { title: "下划线", icon: <UnderlineOutlined />, action: () => insertMarkdown("<u>", "</u>") },
+    { title: "下划线", icon: <UnderlineOutlined />, action: () => insertMarkdown("__", "__") }, // 使用 Markdown 语法实现下划线
     { title: "删除线", icon: <StrikethroughOutlined />, action: () => insertMarkdown("~~", "~~") },
     { title: "有序列表", icon: <OrderedListOutlined />, action: () => insertMarkdown("1. ") },
     { title: "无序列表", icon: <UnorderedListOutlined />, action: () => insertMarkdown("- ") },

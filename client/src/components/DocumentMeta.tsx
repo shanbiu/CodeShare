@@ -41,9 +41,7 @@ export function DocumentMate({
   const [title, setTitle] = useState<string>("");
 
   useEffect(() => {
-    if (title) {
       onTitleChange(title);
-    }
   }, [title, onTitleChange]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

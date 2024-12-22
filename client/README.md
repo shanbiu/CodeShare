@@ -1,8 +1,78 @@
-# React + Vite
+# 前端 Markdown 页面功能结构
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 1. 创建代码页面（Create Snippet）
+### 功能：
+- 用户可以通过表单创建新的代码片段。
+- 支持 Markdown 编辑，用户输入内容后可实时预览。
+- 支持设置公开/加密、标签、过期时间等信息。
 
-Currently, two official plugins are available:
+### 模块：
+- **Markdown 编辑器**：
+  - 提供一个可编辑的区域，用户输入 Markdown 内容。
+  - 支持代码高亮、链接、图片等 Markdown 语法。
+  - 实时预览区显示输入的 Markdown 渲染结果。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **设置面板**：
+  - 用户可以设置代码片段的公开/加密状态。
+  - 设置标签、过期时间和其他元数据。
+
+- **保存按钮**：
+  - 提交表单并保存新创建的代码片段。
+  - 如果是加密状态，要求输入密码。
+
+## 2. 代码片段详情页面（Snippet Details）
+### 功能：
+- 显示详细的代码片段信息，包括代码、标签、创建时间、过期时间等。
+- 支持代码的复制操作。
+- 支持分享代码片段。
+- 支持编辑或删除操作。
+
+### 模块：
+- **代码显示**：
+  - 显示 Markdown 渲染后的内容。
+  - 如果有代码块，使用合适的代码编辑器或视图来展示代码。
+  - 提供复制按钮（使用 Clipboard.js ）。
+
+- **操作按钮**：
+  - 编辑按钮：用户可以点击进入编辑页面。
+  - 删除按钮：删除当前代码片段。
+  - 分享按钮：允许用户分享此片段的链接或通过社交平台分享。
+
+- **公开/加密状态**：
+  - 如果加密,需要根据链接进行密码验证,如果失败则跳转到创建代码页面。
+
+## 3. 编辑代码片段页面（Edit Snippet）
+### 功能：
+- 同新建代码页面,保存按钮改为更新样式。
+
+
+## 4. 列表页面（list）
+### 功能：
+- 用户可以过滤选择公开的代码片段，查看所有公开的代码片段。
+- 用户可以修改代码片段的公开状态,密码,和到期时间。
+
+### 模块：
+- **Code卡片**：
+  - 显示基础信息和一些操作按钮。
+
+
+- **过滤条件**：
+  - 用户可以设置过滤条件，如标签、时间范围等。
+  - 提供搜索框，用户可以输入关键词进行搜索。
+
+
+## 技术要点
+
+- 数据获取：使用 Fetch API 或 Axios 从后端获取数据。
+
+- Markdown 渲染：使用 `react-markdown` 或 `markdown-it` 来渲染 Markdown 内容，实时预览。
+
+- 代码高亮：在编辑器或展示区域，使用 `monaco-editor` 或 `prismjs` 进行代码高亮。
+
+- Clipboard.js：用于处理代码片段的复制功能，确保复制到的内容正确。
+
+- 路由管理：使用 React Router 来管理页面跳转，确保每个页面能够访问到相应的资源。
+
+- 主题支持： 根据用户设置（深色或浅色模式）动态切换 UI 主题。
+
+
