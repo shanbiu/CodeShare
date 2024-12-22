@@ -5,8 +5,23 @@ import { useTheme } from './ThemeProvider'; // 假设你的主题管理钩子是
 import SharePopover from './SharePopover'; // 引入 SharePopover 组件
 import axios from 'axios';
 
+interface Item {
+  id: string;
+  title: string;
+  snippets: Array<{
+    key: string;
+    language: string;
+    title: string;
+    code: string;
+  }>;
+  tags: string[];
+  create_at: string;
+  isPublic: boolean;
+  password: string | null;
+  expire_at: string | null;
+}
 interface LeftIconsProps {
-  item: any; // 从父组件传入的 item 数据
+  item: Item; // 从父组件传入的 item 数据
   fetchData: (id?: string, password?: string) => void; // 从父组件传入的刷新数据的函数
 }
 

@@ -22,7 +22,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
 }) => {
   const [inputValue] = useState(id);
   const [generatedPassword, setGeneratedPassword] = useState<string | null>(password || null);
-  const [expireAt, setExpireAt] = useState<any>(expire_at ? dayjs(expire_at) : null); // 使用 day.js 处理过期时间
+  const [expireAt, setExpireAt] = useState<dayjs.Dayjs|null>(expire_at ? dayjs(expire_at) : null); // 使用 day.js 处理过期时间
   const [shareStatus, setShareStatus] = useState(isPublic ? "public" : "private"); // 默认分享状态
 
   // 更新分享范围
@@ -91,7 +91,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
   const qrCodeContent = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(inputValue)}&size=100x100`;
 
   // 提交过期时间
-  const handleExpireTimeChange = async (id: string, password: string | null, newExpireAt: any | null) => {
+  const handleExpireTimeChange = async (id: string, password: string | null, newExpireAt: dayjs.Dayjs | null) => {
     if (!newExpireAt) {
       newExpireAt = null;  // 或者传递一个特定值，比如 `null` 表示永久有效
     }

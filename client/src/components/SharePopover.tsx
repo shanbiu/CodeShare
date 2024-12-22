@@ -3,8 +3,24 @@ import { Popover, Tag} from 'antd';
 import { ShareAltOutlined } from '@ant-design/icons';
 import ShareCard from './ShareCard';
 
+interface Item {
+  id: string;
+  title: string;
+  snippets: Array<{
+    key: string;
+    language: string;
+    title: string;
+    code: string;
+  }>;
+  tags: string[];
+  create_at: string;
+  isPublic: boolean;
+  password: string | null;
+  expire_at: string | null;
+}
+
 interface SharePopoverProps {
-  item: any;            // 传递的 item 数据
+  item: Item;            // 传递的 item 数据
   fetchData: (id?: string,password?: string) => void;  // 用于重新获取数据的方法
   children?: React.ReactNode;  // 用于渲染外部传入的组件 (比如 Button 或 Tag)
 }

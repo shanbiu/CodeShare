@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card} from 'antd';
 import {  LockOutlined, UnlockOutlined } from '@ant-design/icons';
 import Editor from "@monaco-editor/react";
@@ -29,7 +29,7 @@ interface CodeCardProps {
 }
 
 export default function CodeCard({ item, fetchData }: CodeCardProps) {
-  const [isPublic, setIsPublic] = useState(item.isPublic);
+  const { isPublic } = item;
   const { isDarkMode } = useTheme(); 
   const navigate = useNavigate();
 
