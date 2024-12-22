@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Input, Popover, message, Tooltip, Select, DatePicker, Space } from "antd";
 import { CopyOutlined, QrcodeOutlined } from "@ant-design/icons";
 import UniqueCode from "./createUniqueCode";
@@ -20,7 +20,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
   expire_at,
   fetchData,
 }) => {
-  const [inputValue, setInputValue] = useState(id);
+  const [inputValue] = useState(id);
   const [generatedPassword, setGeneratedPassword] = useState<string | null>(password || null);
   const [expireAt, setExpireAt] = useState<any>(expire_at ? dayjs(expire_at) : null); // 使用 day.js 处理过期时间
   const [shareStatus, setShareStatus] = useState(isPublic ? "public" : "private"); // 默认分享状态
@@ -54,7 +54,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
           fetchData(id,newPassword);
         }
       }
-    } catch (error) {
+    } catch {
       alert("加密失败");
 
     }
@@ -108,12 +108,12 @@ const ShareCard: React.FC<ShareCardProps> = ({
   
       if (response.data.success) {
         message.success("过期时间已更新");
-        let pw=password?password:undefined
+        const pw=password?password:undefined
         fetchData(id,pw ); // 重新加载数据
       } else {
         message.error("更新过期时间失败");
       }
-    } catch (error) {
+    } catch {
       message.error("更新过期时间失败");
     }
   };
@@ -198,7 +198,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
           showTime
           value={expireAt}
           placeholder={expire_at ? "选择过期时间" : "不填, 永久有效"}
-          onChange={(date, dateString) => {
+          onChange={(date) => {
             handleExpireTimeChange(id, generatedPassword, date);
           }}
           onClick={(e) => e.stopPropagation()}

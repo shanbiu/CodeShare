@@ -37,7 +37,6 @@ export function DocumentMate({
   markdown,
   setMarkdown,
 }: DocumentMateProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [title, setTitle] = useState<string>("");
 
   useEffect(() => {
@@ -53,7 +52,6 @@ export function DocumentMate({
     <div className="mt-4">
       <Collapse
         expandIcon={({ isActive }) => <DownOutlined rotate={isActive ? 0 : -90} />}
-        onChange={(key) => setIsExpanded(key.length > 0)}
       >
         <Panel header="更多设置" key="1">
           <Card>

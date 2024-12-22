@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Button, Checkbox, Select } from 'antd';
 
 // 定义表单字段类型

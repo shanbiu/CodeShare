@@ -1,9 +1,8 @@
-import React, { useState, useRef } from "react";
-import { Button, Space, Tooltip } from "antd";
+import React, { useRef } from "react";
+import { Button,  Tooltip } from "antd";
 import {
   BoldOutlined,
   ItalicOutlined,
-  UnderlineOutlined,
   StrikethroughOutlined,
   OrderedListOutlined,
   UnorderedListOutlined,

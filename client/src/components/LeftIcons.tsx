@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Button } from 'antd';
 import { DownloadOutlined, BulbOutlined,ShareAltOutlined } from '@ant-design/icons';
 import { useTheme } from './ThemeProvider'; // 假设你的主题管理钩子是 useTheme
@@ -29,8 +29,8 @@ const LeftIcons: React.FC<LeftIconsProps> = ({ item, fetchData }) => {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-    } catch (error) {
-      // console.error('下载失败', error);
+    } catch {
+      
       alert('下载失败，请稍后重试');
     }
   };

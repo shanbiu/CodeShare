@@ -31,7 +31,7 @@ export function SubmitButtons({
 
   // 生成密码的函数
   const generatePassword = () => {
-    let result = UniqueCode();
+    const result = UniqueCode();
     onPasswordChange(result);
     setGeneratedPassword(result);
     setStoredPassword(result); // 暂存密码也更新

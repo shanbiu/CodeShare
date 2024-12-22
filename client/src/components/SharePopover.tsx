@@ -1,6 +1,6 @@
 import React from 'react';
-import { Popover, Tag, Button } from 'antd';
-import { ShareAltOutlined, DownloadOutlined } from '@ant-design/icons';
+import { Popover, Tag} from 'antd';
+import { ShareAltOutlined } from '@ant-design/icons';
 import ShareCard from './ShareCard';
 
 interface SharePopoverProps {

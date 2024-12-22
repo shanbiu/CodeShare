@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Card } from "antd";
 import Editor from "@monaco-editor/react";
 import { useTheme } from "./ThemeProvider";
-import * as monaco from "monaco-editor"; 
+
 
 interface CodeEditorProps {
   title: string;
@@ -10,7 +10,7 @@ interface CodeEditorProps {
   language: string;
   onChange: (code: string) => void;
 }
-export function CodeEditor({ title, code, language, onChange }: CodeEditorProps) {
+export function CodeEditor({  code, language, onChange }: CodeEditorProps) {
   const { isDarkMode } = useTheme();
 
   return (

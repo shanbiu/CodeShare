@@ -37,7 +37,7 @@ function MonacoEditor({ language, code, onChange }: { language: string; code: st
 
 // 为 Python 语言提供补全项
 monaco.languages.registerCompletionItemProvider('python', {
-    provideCompletionItems: (model, position) => {
+    provideCompletionItems: (model) => {
       const suggestions = [
         {
           label: 'print',
@@ -53,7 +53,7 @@ monaco.languages.registerCompletionItemProvider('python', {
   
   // 为 Java 语言提供补全项
   monaco.languages.registerCompletionItemProvider('java', {
-    provideCompletionItems: (model, position) => {
+    provideCompletionItems: (model) => {
       const suggestions = [
         {
           label: 'System.out.println',

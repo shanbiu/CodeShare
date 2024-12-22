@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Divider, Button } from "antd";
+import { Divider,} from "antd";
 import SearchBar from "../components/SearchBar";
 import Filters from "../components/Filters";
 import Header from "../components/Header";
@@ -41,10 +41,8 @@ export default function CodeList() {
       const response = await axios.get("/api/list"); 
       setCodeData(response.data); 
       console.log("获取数据成功!");
-    } catch (err) {
- 
-    } finally {
-
+    } catch  {
+      console.error("获取数据失败!");
     }
   };
 

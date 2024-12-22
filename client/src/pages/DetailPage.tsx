@@ -26,7 +26,8 @@ export default function DetailPage() {
       const url =pw? `/api/code/${id}?pw=${pw}` : `/api/code/${id}`; 
       const response = await axios.get(url);
       setSnippetData(response.data); // 设置返回的数据
-    } catch (err) {
+    } catch {
+      console.error('Error fetching data');
       navigate('/'); 
     }
   };

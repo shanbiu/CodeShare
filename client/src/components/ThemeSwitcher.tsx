@@ -7,7 +7,7 @@ interface ThemeSwitcherProps {
   className?: string;
 }
 
-const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ className }) => {
+const ThemeSwitcher: React.FC<ThemeSwitcherProps> = () => {
   const { isDarkMode, toggleTheme } = useTheme();
 
   const handleChange = (value: string) => {

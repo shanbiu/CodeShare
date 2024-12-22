@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Card, Badge, Button, Tabs, Space } from "antd";
+import { Card, Button, Tabs, Space } from "antd";
 import {
   EditOutlined,
   CopyOutlined,
@@ -8,7 +8,6 @@ import {
   ShareAltOutlined,
 } from "@ant-design/icons";
 import ActionMenu from "./ActionMenu";
-import ReactMarkdown from "react-markdown";
 import { Editor } from "@monaco-editor/react";
 import CodeTags from "./CodeTags"; // 引入 CodeTags 组件
 import { useTheme } from "./ThemeProvider"; // 引入 useTheme

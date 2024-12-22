@@ -5,7 +5,7 @@ import { PassThrough } from 'stream';
 
 // 文件名清理函数
 function sanitizeFileName(fileName) {
-    return fileName.replace(/[\/:*?"<>|\\]/g, '_').replace(/\s+/g, '_');
+    return fileName.replace(/[/:*?"<>|\\]/g, '_').replace(/\s+/g, '_');
 }
 
 // 定义 language 到 extension 的映射
@@ -77,8 +77,7 @@ export async function downloadCodeShare(ctx) {
         result.snippets.forEach((snippet, index) => {
             const extension = languageToExtension[snippet.language] || '.txt'; // 默认是.txt
             const fileName = `${sanitizeFileName(snippet.title || `snippet_${index + 1}`)}${extension}`;
-            // const filePath = path.join(tempDir, fileName);
-            // console.log(`创建临时文件路径: ${filePath}`);  // 打印临时文件路径
+
             const fileContent = snippet.code;
             archive.append(fileContent, { name: fileName });
         });

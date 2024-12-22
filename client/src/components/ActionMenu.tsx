@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dropdown, Menu, Modal, Input, Button, Space } from "antd";
+import { Dropdown,  Modal, Input, Button } from "antd";
 import {
   LockOutlined,
   UnlockOutlined,
@@ -26,7 +26,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
   isPublic,
   id,
   password,
-  navigateToHome,
+
   fetchData,
 }) => {
   const navigate = useNavigate(); // 用于跳转
@@ -120,7 +120,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
       }
       setIsModalVisible(false); // 关闭弹窗
 
-    } catch (error) {
+    } catch  {
       alert("操作失败");
    
     }
@@ -139,7 +139,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
           setIsDeleteModalVisible(false); 
           fetchData(); 
         }
-      } catch (error) {
+      } catch  {
         alert("删除失败");
      
         setIsDeleteModalVisible(false); 
@@ -155,7 +155,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
           setIsDeleteModalVisible(false); 
           fetchData();
         }
-      } catch (error) {
+      } catch  {
         alert("密码错误，删除失败");
         setIsDeleteModalVisible(false);
       }
