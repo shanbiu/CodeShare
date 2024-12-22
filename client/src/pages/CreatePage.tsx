@@ -11,7 +11,7 @@ import { useTheme } from "../components/ThemeProvider";
 import dayjs from 'dayjs'; // 导入 dayjs 库
 import axios from 'axios';
 import CodeForm from '../components/CodeForm'; // 引入表单组件
-import randomPassword from "../components/randomPassword";
+import UniqueCode from "../components/createUniqueCode";
 
 
 const { Content } = Layout;
@@ -25,7 +25,7 @@ function CreatePage() {
   const [codeData, setCodeData] = useState<any | null>(null); // 用于存储编辑页面的代码数据
   const [loading, setLoading] = useState(false); // 控制加载状态
   // 使用 generateShortId 来生成短链 ID
-  const [id, setId] = useState<string>(randomPassword()); // 初始化 id 为 6 位短链
+  const [id, setId] = useState<string>(UniqueCode()); // 初始化 id
   const [title, setTitle] = useState('代码片段');
   const [tags, setTags] = useState<string[]>([]); // Tags
   const createAt = dayjs(); // 创建时间
@@ -34,7 +34,7 @@ function CreatePage() {
 
    const { isDarkMode } = useTheme(); 
   const [snippets, setSnippets] = useState([
-    { key: randomPassword(), language: 'javascript', title: '代码块', code: '//请输入你的代码' },
+    { key: UniqueCode(), language: 'javascript', title: '代码块', code: '//请输入你的代码' },
   ]);
   const [activeSnippet, setActiveSnippet] = useState(snippets[0].key);
   const [isPublic, setIsPublic] = useState(true);

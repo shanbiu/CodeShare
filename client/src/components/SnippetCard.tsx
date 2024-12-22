@@ -49,7 +49,7 @@ interface SnippetData {
 interface SnippetCardProps {
   snippetData: SnippetData;
   handleCopy: (code: string) => void;
-  fetchData: () => void;
+  fetchData: (id?: string, pw?: string | null) => void;
 }
 
 const SnippetCard: React.FC<SnippetCardProps> = ({

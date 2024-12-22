@@ -7,7 +7,7 @@ import axios from 'axios';
 
 interface LeftIconsProps {
   item: any; // 从父组件传入的 item 数据
-  fetchData: () => void; // 从父组件传入的刷新数据的函数
+  fetchData: (id?: string, password?: string) => void; // 从父组件传入的刷新数据的函数
 }
 
 const LeftIcons: React.FC<LeftIconsProps> = ({ item, fetchData }) => {

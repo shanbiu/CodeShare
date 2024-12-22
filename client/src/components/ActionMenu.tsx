@@ -11,7 +11,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom"; // 使用 React Router 进行跳转
 import axios from "axios"; // 这里使用 axios 发送请求
-import randomPassword from "./randomPassword";
+import UniqueCode from "./createUniqueCode";
 
 // 定义 ActionMenu 的 props 类型
 interface ActionMenuProps {
@@ -84,7 +84,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
 
   // 生成随机密码的函数
   const generateRandomPassword = () => {
-    const result = randomPassword();
+    const result = UniqueCode();
     setNewPassword(result);
   };
 

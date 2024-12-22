@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Tabs, Select, Input } from 'antd';
 import { CodeEditor } from './CodeEditor'; // 引入 Monaco Editor 组件
-import { v4 as uuidv4 } from 'uuid';
+
+import UniqueCode from './createUniqueCode';
 
 interface Snippet {
   key: string;
@@ -52,7 +53,7 @@ const CodeTabs: React.FC<CodeTabsProps> = ({
   };
 
   const handleAddSnippet = () => {
-    const newKey = uuidv4(); // 使用 uuid 生成唯一的 key
+    const newKey = UniqueCode(); // 使用 uuid 生成唯一的 key
     onAddSnippet(newKey); // 添加新的 tab
   };
 

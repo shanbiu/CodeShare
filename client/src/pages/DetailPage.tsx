@@ -18,11 +18,13 @@ export default function DetailPage() {
   const queryParams = new URLSearchParams(location.search);
   const pw = queryParams.get('pw'); // 获取密码参数
 
-  const fetchData = async () => {
+  const fetchData = async (id, pw) => {
     try {
-      const response = await axios.get(`/api/code/${id}`, {
-        params: { pw } // 将 pw 作为查询参数传递
-      });
+      const path =pw? `/code/${id}?pw=${pw}` : `/code/${id}`; // 如果有密码，则将密码添加到 path 中
+      navigate(path);
+
+      const url =pw? `/api/code/${id}?pw=${pw}` : `/api/code/${id}`; // 如果有密码，则将密码添加到 URL 中
+      const response = await axios.get(url);
       setSnippetData(response.data); // 设置返回的数据
     } catch (err) {
       console.error('获取数据失败:', err);
@@ -30,7 +32,7 @@ export default function DetailPage() {
     }
   };
   useEffect(() => {
-    fetchData();
+    fetchData(id, pw); // 组件挂载时加载数据
   }, [id, pw]); // 当 id 或 pw 变化时重新加载数据
 
 

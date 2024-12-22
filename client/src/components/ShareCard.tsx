@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Input, Popover, message, Tooltip, Select, DatePicker, Space } from "antd";
 import { CopyOutlined, QrcodeOutlined } from "@ant-design/icons";
-import randomPassword from "./randomPassword";
+import UniqueCode from "./createUniqueCode";
 import axios from "axios";
 import dayjs from "dayjs";
 
@@ -10,7 +10,7 @@ interface ShareCardProps {
   isPublic: boolean;
   password: string | null;
   expire_at: string | null;
-  fetchData: () => void;
+  fetchData: (id?: string, password?: string) => void;
 }
 
 const ShareCard: React.FC<ShareCardProps> = ({
@@ -32,8 +32,6 @@ const ShareCard: React.FC<ShareCardProps> = ({
     try {
       if (newShareStatus) {
         // 加密，带上当前密码
-        console.log("当前加密，带上当前密码");
-        console.log("当前密码", generatedPassword);
         const response = await axios.patch(`/api/updatePublic/${id}`, {
           isPublic: !newShareStatus,
           password: generatedPassword, // 传递当前密码
@@ -41,11 +39,11 @@ const ShareCard: React.FC<ShareCardProps> = ({
 
         if (response.data.success) {
           alert("取消加密成功");
-          fetchData();
+          fetchData(id);
         }
       } else {
         // newExpireAt
-        const newPassword = randomPassword(); // 生成新密码
+        const newPassword = UniqueCode(); // 生成新密码
         const response = await axios.patch(`/api/updatePublic/${id}`, {
           isPublic: !newShareStatus,
           password: newPassword, // 提交新密码
@@ -53,7 +51,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
         if (response.data.success) {
           setGeneratedPassword(newPassword); // 更新密码状态
           alert("加密成功");
-          fetchData();
+          fetchData(id,newPassword);
         }
       }
     } catch (error) {
@@ -181,7 +179,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
               <Button
                 type="link"
                 onClick={() => {
-                  const newPassword = randomPassword();
+                  const newPassword = UniqueCode();
                   setGeneratedPassword(newPassword); // 更新本地密码
                 }}
               >

@@ -5,7 +5,7 @@ import ShareCard from './ShareCard';
 
 interface SharePopoverProps {
   item: any;            // 传递的 item 数据
-  fetchData: () => void;
+  fetchData: (id?: string,password?: string) => void;  // 用于重新获取数据的方法
   children?: React.ReactNode;  // 用于渲染外部传入的组件 (比如 Button 或 Tag)
 }
 

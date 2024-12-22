@@ -1,17 +1,17 @@
 {
   "code_shares": [
     {
-      "id": "a1b2c3d4-e5f6-4321-9876-543210fedcba",
+      "id": "210fba",
       "title": "Python列表推导式",
       "snippets": [
         {
-          "key": "98765432-abcd-efgh-ijkl-mnopqrstuvwx",
+          "key": "qrstuv",
           "language": "python",
           "title": "列表推导式",
           "code": "# 使用列表推导式生成平方数\nsquares = [x**2 for x in range(10)]\nprint(squares)"
         },
         {
-          "key": "23456789-abcdef12-3456789-9876543210ab",
+          "key": "64a1db",
           "language": "python",
           "title": "字典推导式",
           "code": "# 使用字典推导式生成字典\nsquared_dict = {x: x**2 for x in range(5)}\nprint(squared_dict)"
@@ -28,17 +28,17 @@
       "password": "cCUyT"
     },
     {
-      "id": "45678901-2345-6789-abcd-ef0123456789",
+      "id": "fa9a01",
       "title": "Java Stream API示例",
       "snippets": [
         {
-          "key": "11223344-5566-7788-99aa-bbccddeeff00",
+          "key": "aschr0",
           "language": "java",
           "title": "使用Stream API",
           "code": "import java.util.Arrays;\nimport java.util.List;\n\npublic class StreamExample {\n    public static void main(String[] args) {\n        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);\n        \n        int sum = numbers.stream()\n                          .filter(n -> n % 2 == 0)\n                          .mapToInt(Integer::intValue)\n                          .sum();\n        \n        System.out.println(\"Sum of even numbers: \" + sum);\n    }\n}"
         },
         {
-          "key": "77889900-aabb-ccdd-eeff-112233445566",
+          "key": "8yve4s",
           "language": "java",
           "title": "并行Stream API",
           "code": "import java.util.Arrays;\nimport java.util.List;\n\npublic class ParallelStreamExample {\n    public static void main(String[] args) {\n        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);\n        \n        int sum = numbers.parallelStream()\n                          .filter(n -> n % 2 == 0)\n                          .mapToInt(Integer::intValue)\n                          .sum();\n        \n        System.out.println(\"Sum of even numbers (parallel): \" + sum);\n    }\n}"
@@ -65,13 +65,13 @@
           "code": "//测试markdown 的组件\r\nconsole.log(\"Hello, World!\");"
         },
         {
-          "key": "cf8fa2c1-f05b-44e9-a26d-680ccd683431",
+          "key": "utrfer",
           "language": "python",
           "title": "卡片2",
           "code": "//请输入你的代码\r\nprint(\"Hello, World!\")"
         },
         {
-          "key": "a65fb0d6-7018-4ee2-becb-41d2c0d3db31",
+          "key": "ihtrde",
           "language": "java",
           "title": "卡片3",
           "code": "//请输入你的代码\r\npublic class Main {\r\n    public static void main(String[] args) {\r\n        System.out.println(\"Hello, World!\");\r\n    }\r\n}"
@@ -137,7 +137,7 @@
       "expire_at": null,
       "markdown": "**你好，世界！**",
       "isPublic": true,
-      "password": ""
+      "password": null
     }
   ]
 }

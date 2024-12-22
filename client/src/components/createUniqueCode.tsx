@@ -1,5 +1,5 @@
 // 生成随机密码的函数
-const randomPassword = (): string => {
+const UniqueCode = (): string => {
     const chars =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let result = "";
@@ -10,4 +10,4 @@ const randomPassword = (): string => {
     return result;
   };
 
-  export default randomPassword;
+  export default UniqueCode;
