@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'antd';
-import { DownloadOutlined, BulbOutlined,ShareAltOutlined } from '@ant-design/icons';
-import { useTheme } from './ThemeProvider'; // 假设你的主题管理钩子是 useTheme
+import { DownloadOutlined, BulbOutlined, ShareAltOutlined } from '@ant-design/icons';
+import { useTheme } from './ThemeProvider'; 
 import SharePopover from './SharePopover'; // 引入 SharePopover 组件
 import axios from 'axios';
 
@@ -13,13 +13,14 @@ interface Item {
     language: string;
     title: string;
     code: string;
-  }>;
+  }> ;
   tags: string[];
   create_at: string;
   isPublic: boolean;
   password: string | null;
   expire_at: string | null;
 }
+
 interface LeftIconsProps {
   item: Item; // 从父组件传入的 item 数据
   fetchData: (id?: string, password?: string) => void; // 从父组件传入的刷新数据的函数
@@ -30,7 +31,6 @@ const LeftIcons: React.FC<LeftIconsProps> = ({ item, fetchData }) => {
 
   const handleDownload = async () => {
     try {
-      // 假设 password 从父组件传递给 LeftIcons
       const params = item.password ? { pw: item.password } : {}; // 如果有密码，作为查询参数传递
       const response = await axios.get(`/api/download/${item.id}`, { params, responseType: 'blob' });
 
@@ -45,7 +45,6 @@ const LeftIcons: React.FC<LeftIconsProps> = ({ item, fetchData }) => {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch {
-      
       alert('下载失败，请稍后重试');
     }
   };
@@ -54,20 +53,16 @@ const LeftIcons: React.FC<LeftIconsProps> = ({ item, fetchData }) => {
     <div className="w-16 mr-4 space-y-4">
       {/* 使用传入的 item 和 fetchData */}
       {item && (
-        <SharePopover
-          item={item}
-          fetchData={fetchData}  // 传递刷新数据的函数
-          children={
-            <Button
-              icon={<ShareAltOutlined />}
-              shape="circle"
-              size="large"
-              title="分享"
-            />
-          }
-        />
+        <SharePopover item={item} fetchData={fetchData}>
+          <Button
+            icon={<ShareAltOutlined />}
+            shape="circle"
+            size="large"
+            title="分享"
+          />
+        </SharePopover>
       )}
-      
+
       {/* 下载按钮 */}
       <Button
         icon={<DownloadOutlined />}
@@ -76,7 +71,7 @@ const LeftIcons: React.FC<LeftIconsProps> = ({ item, fetchData }) => {
         onClick={handleDownload}
         title="下载代码"
       />
-      
+
       {/* 切换主题按钮 */}
       <Button
         icon={<BulbOutlined />}

@@ -180,15 +180,11 @@ const SnippetCard: React.FC<SnippetCardProps> = ({
               >
                 编辑
               </Button>
-              <SharePopover
-                item={snippetData}
-                fetchData={fetchData}
-                children={
-                  <Button type="link" icon={<ShareAltOutlined />} size="small">
-                    分享
-                  </Button>
-                }
-              />
+              <SharePopover item={snippetData} fetchData={fetchData}>
+            <Button type="link" icon={<ShareAltOutlined />} size="small">
+              分享
+            </Button>
+          </SharePopover>
             </Space>
           </div>
         }
