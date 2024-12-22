@@ -1,5 +1,5 @@
-import { fileURLToPath } from 'url'; 
-import path from 'path';  
+import { fileURLToPath } from 'url';
+import path from 'path';
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
 import fs from 'fs';
@@ -18,11 +18,11 @@ export async function loadDB() {
       fs.writeFileSync(dbFilePath, JSON.stringify(defaultData, null, 2));  // 格式化 JSON 文件内容
     }
 
-    await db.read(); 
+    await db.read();
 
     return db;
   } catch (error) {
     console.error('加载数据库失败:', error.message);
-    throw error;  
+    throw error;
   }
 }

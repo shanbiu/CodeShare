@@ -1,8 +1,8 @@
-import React from 'react'
-import { Input } from 'antd'
+import React from "react";
+import { Input } from "antd";
 
 interface SearchBarProps {
-  setSearchTerm: (term: string) => void
+  setSearchTerm: (term: string) => void;
 }
 
 export default function SearchBar({ setSearchTerm }: SearchBarProps) {
@@ -13,5 +13,5 @@ export default function SearchBar({ setSearchTerm }: SearchBarProps) {
       onChange={(e) => setSearchTerm(e.target.value)}
       className="max-w-xs"
     />
-  )
+  );
 }

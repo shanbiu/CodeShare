@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Tabs, Select, Input } from 'antd';
-import { CodeEditor } from './CodeEditor'; // 引入 Monaco Editor 组件
+import React, { useState } from "react";
+import { Tabs, Select, Input } from "antd";
+import { CodeEditor } from "./CodeEditor"; // 引入 Monaco Editor 组件
 
-import UniqueCode from './createUniqueCode';
+import UniqueCode from "./createUniqueCode";
 
 interface Snippet {
   key: string;
@@ -17,7 +17,12 @@ interface CodeTabsProps {
   setActiveSnippet: (key: string) => void;
   onAddSnippet: (newTabIndex: string) => void;
   onRemoveSnippet: (targetKey: string) => void;
-  onUpdateSnippet: (key: string, newCode: string, newLanguage: string, newTitle: string) => void;
+  onUpdateSnippet: (
+    key: string,
+    newCode: string,
+    newLanguage: string,
+    newTitle: string
+  ) => void;
 }
 
 const CodeTabs: React.FC<CodeTabsProps> = ({
@@ -29,7 +34,7 @@ const CodeTabs: React.FC<CodeTabsProps> = ({
   onUpdateSnippet,
 }) => {
   const [editingKey, setEditingKey] = useState<string | null>(null); // 当前正在编辑的标签 key
-  const [newTitle, setNewTitle] = useState<string>(''); // 编辑时的标题值
+  const [newTitle, setNewTitle] = useState<string>(""); // 编辑时的标题值
 
   const handleLanguageChange = (key: string, value: string) => {
     const updatedSnippet = snippets.find((snippet) => snippet.key === key);
@@ -44,10 +49,15 @@ const CodeTabs: React.FC<CodeTabsProps> = ({
   };
 
   const handleTitleSave = (key: string) => {
-    if (newTitle.trim() === '') return; // 防止保存空标题
+    if (newTitle.trim() === "") return; // 防止保存空标题
     const updatedSnippet = snippets.find((snippet) => snippet.key === key);
     if (updatedSnippet) {
-      onUpdateSnippet(key, updatedSnippet.code, updatedSnippet.language, newTitle);
+      onUpdateSnippet(
+        key,
+        updatedSnippet.code,
+        updatedSnippet.language,
+        newTitle
+      );
       setEditingKey(null); // 保存后退出编辑状态
     }
   };
@@ -63,35 +73,38 @@ const CodeTabs: React.FC<CodeTabsProps> = ({
       activeKey={activeSnippet}
       onChange={setActiveSnippet}
       onEdit={(targetKey, action) => {
-        if (action === 'add') {
+        if (action === "add") {
           handleAddSnippet();
-        } else if (action === 'remove') {
+        } else if (action === "remove") {
           onRemoveSnippet(targetKey as string);
         }
       }}
       items={snippets.map((snippet) => ({
         key: snippet.key,
-        label: editingKey === snippet.key ? (
-          <Input
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
-            onBlur={() => handleTitleSave(snippet.key)} // 离开编辑框时保存
-            onPressEnter={() => handleTitleSave(snippet.key)} // 按 Enter 键保存
-            autoFocus
-            style={{
-              minWidth: '60px',
-              maxWidth: '80px',
-              border: 'none',
-              outline: 'none',
-              padding: '0 2px',
-              boxSizing: 'border-box',
-            }}
-          />
-        ) : (
-          <span onDoubleClick={() => handleTitleEdit(snippet.key, snippet.title)}>
-            {snippet.title}
-          </span>
-        ),
+        label:
+          editingKey === snippet.key ? (
+            <Input
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+              onBlur={() => handleTitleSave(snippet.key)} // 离开编辑框时保存
+              onPressEnter={() => handleTitleSave(snippet.key)} // 按 Enter 键保存
+              autoFocus
+              style={{
+                minWidth: "60px",
+                maxWidth: "80px",
+                border: "none",
+                outline: "none",
+                padding: "0 2px",
+                boxSizing: "border-box",
+              }}
+            />
+          ) : (
+            <span
+              onDoubleClick={() => handleTitleEdit(snippet.key, snippet.title)}
+            >
+              {snippet.title}
+            </span>
+          ),
         children: (
           <div className="relative">
             <Select
@@ -105,9 +118,16 @@ const CodeTabs: React.FC<CodeTabsProps> = ({
             </Select>
             <CodeEditor
               title={snippet.title}
-              language={snippet.language}  // 传递动态语言
+              language={snippet.language} // 传递动态语言
               code={snippet.code}
-              onChange={(newCode) => onUpdateSnippet(snippet.key, newCode, snippet.language, snippet.title)}
+              onChange={(newCode) =>
+                onUpdateSnippet(
+                  snippet.key,
+                  newCode,
+                  snippet.language,
+                  snippet.title
+                )
+              }
             />
           </div>
         ),

@@ -3,14 +3,13 @@ import { Card } from "antd";
 import Editor from "@monaco-editor/react";
 import { useTheme } from "./ThemeProvider";
 
-
 interface CodeEditorProps {
   title: string;
   code: string;
   language: string;
   onChange: (code: string) => void;
 }
-export function CodeEditor({  code, language, onChange }: CodeEditorProps) {
+export function CodeEditor({ code, language, onChange }: CodeEditorProps) {
   const { isDarkMode } = useTheme();
 
   return (
@@ -18,16 +17,16 @@ export function CodeEditor({  code, language, onChange }: CodeEditorProps) {
       <div>
         <Editor
           className="h-72"
-          language={language}  // 使用受控属性 language
+          language={language} // 使用受控属性 language
           value={code}
-          theme={isDarkMode ? 'vs-dark' : 'vs-light'}
-          onChange={(value) => onChange(value || '')} // 如果 value 为 null，设置为空字符串
+          theme={isDarkMode ? "vs-dark" : "vs-light"}
+          onChange={(value) => onChange(value || "")} // 如果 value 为 null，设置为空字符串
           options={{
             minimap: {
-              enabled: false
+              enabled: false,
             },
             fontSize: 14,
-            lineNumbers: 'on',
+            lineNumbers: "on",
             roundedSelection: true,
             scrollBeyondLastLine: false,
             readOnly: false,

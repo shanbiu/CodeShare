@@ -1,14 +1,19 @@
-import React from 'react'
-import { Select } from 'antd'
+import React from "react";
+import { Select } from "antd";
 
 interface FiltersProps {
-  shareRange: string
-  setShareRange: (range: string) => void
-  language: string
-  setLanguage: (lang: string) => void
+  shareRange: string;
+  setShareRange: (range: string) => void;
+  language: string;
+  setLanguage: (lang: string) => void;
 }
 
-export default function Filters({ shareRange, setShareRange, language, setLanguage }: FiltersProps) {
+export default function Filters({
+  shareRange,
+  setShareRange,
+  language,
+  setLanguage,
+}: FiltersProps) {
   return (
     <div className="flex space-x-4">
       <Select
@@ -34,5 +39,5 @@ export default function Filters({ shareRange, setShareRange, language, setLangua
         <Select.Option value="java">Java</Select.Option>
       </Select>
     </div>
-  )
+  );
 }

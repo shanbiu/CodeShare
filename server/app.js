@@ -18,9 +18,9 @@ app.use(serve('../client/dist'));
 
 // 使用 koa-body 中间件处理请求体
 app.use(koaBody({
-  json: true,           
-  urlencoded: true,   
-  multipart: true,     
+  json: true,
+  urlencoded: true,
+  multipart: true,
 }));
 
 // 统一接口错误处理
@@ -43,8 +43,8 @@ app.use(async (ctx, next) => {
 });
 
 //  注册路由
-app.use(router.routes());      
-app.use(router.allowedMethods()); 
+app.use(router.routes());
+app.use(router.allowedMethods());
 //  启动服务器
 app.listen(3001, () => {
   console.log('Server is running on http://localhost:3001');

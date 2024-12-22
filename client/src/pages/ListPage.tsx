@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Divider,} from "antd";
+import { Divider } from "antd";
 import SearchBar from "../components/SearchBar";
 import Filters from "../components/Filters";
 import Header from "../components/Header";
 import CodeCard from "../components/CodeCard";
-import axios from "axios"; 
-import ThemeSwitcher from "../components/ThemeSwitcher"; 
-import { useTheme } from "../components/ThemeProvider"; 
-
+import axios from "axios";
+import ThemeSwitcher from "../components/ThemeSwitcher";
+import { useTheme } from "../components/ThemeProvider";
 
 interface Snippet {
   key: string;
@@ -22,10 +21,10 @@ interface CodeItem {
   snippets: Snippet[];
   tags: string[];
   create_at: string;
-  expire_at: string | null; 
+  expire_at: string | null;
   markdown: string;
   isPublic: boolean;
-  password: string | null; 
+  password: string | null;
 }
 
 export default function CodeList() {
@@ -38,10 +37,10 @@ export default function CodeList() {
   // 获取数据函数
   const fetchData = async () => {
     try {
-      const response = await axios.get("/api/list"); 
-      setCodeData(response.data); 
+      const response = await axios.get("/api/list");
+      setCodeData(response.data);
       console.log("获取数据成功!");
-    } catch  {
+    } catch {
       console.error("获取数据失败!");
     }
   };
@@ -69,11 +68,12 @@ export default function CodeList() {
     return matchesSearch && matchesShareRange && matchesLanguage;
   });
 
-
-
-
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'bg-neutral-800' : 'bg-gray-100'}`}>
+    <div
+      className={`min-h-screen ${
+        isDarkMode ? "bg-neutral-800" : "bg-gray-100"
+      }`}
+    >
       <Header />
 
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
@@ -93,10 +93,7 @@ export default function CodeList() {
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filteredData.map((item) => (
-              <CodeCard key={item.id} 
-              item={item} fetchData={fetchData}
-
-               />
+              <CodeCard key={item.id} item={item} fetchData={fetchData} />
             ))}
           </div>
         </div>

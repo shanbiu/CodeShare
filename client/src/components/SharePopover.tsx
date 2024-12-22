@@ -1,7 +1,7 @@
-import React from 'react';
-import { Popover, Tag} from 'antd';
-import { ShareAltOutlined } from '@ant-design/icons';
-import ShareCard from './ShareCard';
+import React from "react";
+import { Popover, Tag } from "antd";
+import { ShareAltOutlined } from "@ant-design/icons";
+import ShareCard from "./ShareCard";
 
 interface Item {
   id: string;
@@ -20,12 +20,16 @@ interface Item {
 }
 
 interface SharePopoverProps {
-  item: Item;            // 传递的 item 数据
-  fetchData: (id?: string,password?: string) => void;  // 用于重新获取数据的方法
-  children?: React.ReactNode;  // 用于渲染外部传入的组件 (比如 Button 或 Tag)
+  item: Item; // 传递的 item 数据
+  fetchData: (id?: string, password?: string) => void; // 用于重新获取数据的方法
+  children?: React.ReactNode; // 用于渲染外部传入的组件 (比如 Button 或 Tag)
 }
 
-const SharePopover: React.FC<SharePopoverProps> = ({ item, children, fetchData }) => {
+const SharePopover: React.FC<SharePopoverProps> = ({
+  item,
+  children,
+  fetchData,
+}) => {
   // 渲染外部传入的组件，如果没有传入，则使用默认的 Tag
   const renderCustomComponent = () => {
     if (children) {
@@ -61,7 +65,7 @@ const SharePopover: React.FC<SharePopoverProps> = ({ item, children, fetchData }
       placement="bottom"
       mouseLeaveDelay={0.5}
     >
-      {renderCustomComponent()}  {/* 渲染外部传入的组件或默认的 Tag */}
+      {renderCustomComponent()} {/* 渲染外部传入的组件或默认的 Tag */}
     </Popover>
   );
 };

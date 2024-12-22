@@ -35,7 +35,6 @@ export function SubmitButtons({
     onPasswordChange(result);
     setGeneratedPassword(result);
     setStoredPassword(result); // 暂存密码也更新
-
   };
 
   // 提交处理函数
@@ -70,7 +69,6 @@ export function SubmitButtons({
       } else {
         // 从加密到公开时清空密码
         setGeneratedPassword("");
-        
       }
     }
   }, [isPublic, isEditMode, queryPassword, storedPassword]); // 依赖项：isPublic, isEditMode, queryPassword, storedPassword

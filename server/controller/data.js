@@ -186,7 +186,7 @@ export async function updatePublic(ctx) {
         await db.write();
 
         ctx.status = 200;
-        ctx.body = { message: 'success',success: true };
+        ctx.body = { message: 'success', success: true };
       } else {
         // 如果要切换到加密状态，更新密码
         codeShare.isPublic = false;
@@ -196,7 +196,7 @@ export async function updatePublic(ctx) {
         await db.write();
 
         ctx.status = 200;
-        ctx.body = { message: 'success' ,success: true };
+        ctx.body = { message: 'success', success: true };
       }
     } else {
       ctx.status = 404;

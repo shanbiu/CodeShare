@@ -17,7 +17,6 @@ import MarkdownIt from "markdown-it";
 import markdownItUnderline from "markdown-it-underline"; // 引入下划线插件
 import hljs from "highlight.js";
 
-
 interface Snippet {
   key: string;
   title: string;
@@ -142,12 +141,16 @@ const SnippetCard: React.FC<SnippetCardProps> = ({
         />
         <Card>
           <div className="h-48 mb-4">
-          <Editor
-            language={snippet.language}
-            value={snippet.code}
-            theme={isDarkMode ? "vs-dark" : "vs-light"} // 根据主题设置 editor 的主题
-            options={{ readOnly: true, minimap: { enabled: false } ,scrollBeyondLastLine: false }}
-          />
+            <Editor
+              language={snippet.language}
+              value={snippet.code}
+              theme={isDarkMode ? "vs-dark" : "vs-light"} // 根据主题设置 editor 的主题
+              options={{
+                readOnly: true,
+                minimap: { enabled: false },
+                scrollBeyondLastLine: false,
+              }}
+            />
           </div>
         </Card>
       </div>
@@ -181,10 +184,10 @@ const SnippetCard: React.FC<SnippetCardProps> = ({
                 编辑
               </Button>
               <SharePopover item={snippetData} fetchData={fetchData}>
-            <Button type="link" icon={<ShareAltOutlined />} size="small">
-              分享
-            </Button>
-          </SharePopover>
+                <Button type="link" icon={<ShareAltOutlined />} size="small">
+                  分享
+                </Button>
+              </SharePopover>
             </Space>
           </div>
         }

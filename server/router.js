@@ -1,6 +1,6 @@
 
 import Router from 'koa-router';
-import { getAllData, getData , addData, deleteData, updateData, updatePublic,updateExpiration } from './controller/data.js';
+import { getAllData, getData, addData, deleteData, updateData, updatePublic, updateExpiration } from './controller/data.js';
 import { downloadCodeShare } from './controller/download.js';
 
 const router = new Router();

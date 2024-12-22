@@ -1,9 +1,13 @@
-import React from 'react';
-import { Button } from 'antd';
-import { DownloadOutlined, BulbOutlined, ShareAltOutlined } from '@ant-design/icons';
-import { useTheme } from './ThemeProvider'; 
-import SharePopover from './SharePopover'; // 引入 SharePopover 组件
-import axios from 'axios';
+import React from "react";
+import { Button } from "antd";
+import {
+  DownloadOutlined,
+  BulbOutlined,
+  ShareAltOutlined,
+} from "@ant-design/icons";
+import { useTheme } from "./ThemeProvider";
+import SharePopover from "./SharePopover"; // 引入 SharePopover 组件
+import axios from "axios";
 
 interface Item {
   id: string;
@@ -13,7 +17,7 @@ interface Item {
     language: string;
     title: string;
     code: string;
-  }> ;
+  }>;
   tags: string[];
   create_at: string;
   isPublic: boolean;
@@ -32,12 +36,17 @@ const LeftIcons: React.FC<LeftIconsProps> = ({ item, fetchData }) => {
   const handleDownload = async () => {
     try {
       const params = item.password ? { pw: item.password } : {}; // 如果有密码，作为查询参数传递
-      const response = await axios.get(`/api/download/${item.id}`, { params, responseType: 'blob' });
+      const response = await axios.get(`/api/download/${item.id}`, {
+        params,
+        responseType: "blob",
+      });
 
-      const file = new Blob([response.data], { type: response.headers['content-type'] });
+      const file = new Blob([response.data], {
+        type: response.headers["content-type"],
+      });
       const url = URL.createObjectURL(file);
 
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
       a.download = `${item.id}.zip`; // 设置下载文件的名称
       document.body.appendChild(a);
@@ -45,7 +54,7 @@ const LeftIcons: React.FC<LeftIconsProps> = ({ item, fetchData }) => {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch {
-      alert('下载失败，请稍后重试');
+      alert("下载失败，请稍后重试");
     }
   };
 

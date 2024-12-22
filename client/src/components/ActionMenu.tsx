@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dropdown,  Modal, Input, Button } from "antd";
+import { Dropdown, Modal, Input, Button } from "antd";
 import {
   LockOutlined,
   UnlockOutlined,
@@ -18,7 +18,7 @@ interface ActionMenuProps {
   isPublic: boolean;
   id: string; // 传递当前数据的 ID
   password: string | null; // 获取到的密码（加密时使用）
-  fetchData: (id?: string,pw?:string) => void; // 父组件传递过来的刷新数据函数
+  fetchData: (id?: string, pw?: string) => void; // 父组件传递过来的刷新数据函数
   navigateToHome?: (id: string) => void; // 父组件传递过来的跳转函数
 }
 
@@ -34,8 +34,6 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
   const [isModalVisible, setIsModalVisible] = useState(false); // 控制加密/取消加密弹窗显示
   const [newPassword, setNewPassword] = useState<string>(""); // 控制加密时生成的密码
   const [isPasswordVisible, setIsPasswordVisible] = useState(false); // 控制密码可见性
-
-
 
   // 设置菜单项
   const menuItems = [
@@ -101,7 +99,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
         });
         if (response.data.success) {
           alert("取消加密成功");
-          fetchData(id)
+          fetchData(id);
         }
       } else {
         // 加密请求，提交新生成的密码
@@ -115,14 +113,12 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
         });
         if (response.data.success) {
           alert("加密成功");
-          fetchData(id, newPassword)
+          fetchData(id, newPassword);
         }
       }
       setIsModalVisible(false); // 关闭弹窗
-
-    } catch  {
+    } catch {
       alert("操作失败");
-   
     }
   };
 
@@ -136,26 +132,27 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
         const response = await axios.delete(`/api/delete/${id}`);
         if (response.data.success) {
           alert("删除成功");
-          setIsDeleteModalVisible(false); 
-          fetchData(); 
+          setIsDeleteModalVisible(false);
+          fetchData();
         }
-      } catch  {
+      } catch {
         alert("删除失败");
-     
-        setIsDeleteModalVisible(false); 
+
+        setIsDeleteModalVisible(false);
       }
     } else {
       // 如果需要密码验证，带上密码发送请求
       try {
-        const response = await axios.delete(`/api/delete/${id}?pw=${password}`,{
-          
-        });
+        const response = await axios.delete(
+          `/api/delete/${id}?pw=${password}`,
+          {}
+        );
         if (response.data.success) {
           alert("删除成功");
-          setIsDeleteModalVisible(false); 
+          setIsDeleteModalVisible(false);
           fetchData();
         }
-      } catch  {
+      } catch {
         alert("密码错误，删除失败");
         setIsDeleteModalVisible(false);
       }
@@ -165,7 +162,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
   // 取消删除
   const handleCancelDelete = (e: React.MouseEvent) => {
     e.stopPropagation(); // 阻止冒泡
-    setIsDeleteModalVisible(false); 
+    setIsDeleteModalVisible(false);
   };
   // 切换密码可见性
   const togglePasswordVisibility = () => {
@@ -176,7 +173,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
     <button onClick={(e) => e.stopPropagation()}>
       <Dropdown
         menu={{
-          items: menuItems, 
+          items: menuItems,
           onClick: ({ key }) => handleActionClick(key), // 处理菜单项点击事件
         }}
       >
@@ -193,7 +190,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
         onCancel={handleCancelDelete}
         okText="确认删除"
         cancelText="取消"
-        okButtonProps={{ danger: true }} 
+        okButtonProps={{ danger: true }}
       >
         <p>是否确认删除？该操作不可找回。</p>
       </Modal>

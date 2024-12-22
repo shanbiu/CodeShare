@@ -35,12 +35,12 @@ export async function downloadCodeShare(ctx) {
         }
 
         const title = result.title;
-        const sanitizedTitle = sanitizeFileName(title); 
+        const sanitizedTitle = sanitizeFileName(title);
         console.log('代码分享标题:', sanitizedTitle);
 
         // 检查是否过期
         const currentTimestamp = Date.now();
-        const isExpired = result.expire_at!== null && result.expire_at < currentTimestamp;
+        const isExpired = result.expire_at !== null && result.expire_at < currentTimestamp;
 
         if (isExpired) {
             ctx.body = { message: '该代码分享已过期。' };
@@ -49,7 +49,7 @@ export async function downloadCodeShare(ctx) {
         }
 
         // 如果是加密的，验证密码
-        if (!result.isPublic && result.password!== pw) {
+        if (!result.isPublic && result.password !== pw) {
             ctx.body = { message: '密码错误。' };
             ctx.status = 403; // Forbidden
             return;
@@ -63,12 +63,12 @@ export async function downloadCodeShare(ctx) {
             ctx.body = { message: '压缩包创建失败', error: err.message };
         });
         archive.on("end", function () {
-            
-            console.log("Archive wrote %d bytes", archive.pointer());
-          });
 
-        
-        ctx.body= new PassThrough();
+            console.log("Archive wrote %d bytes", archive.pointer());
+        });
+
+
+        ctx.body = new PassThrough();
 
         archive.pipe(ctx.body);
 
@@ -81,7 +81,7 @@ export async function downloadCodeShare(ctx) {
             const fileContent = snippet.code;
             archive.append(fileContent, { name: fileName });
         });
-         // 完成压缩
+        // 完成压缩
         archive.finalize();
         console.log('压缩包创建完成');
     } catch (error) {
