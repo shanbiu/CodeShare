@@ -11,6 +11,8 @@ process.on('uncaughtException', (err, origin) => {
   console.log(`Caught exception: ${err}\n` + `Exception origin: ${origin}`);
 });
 
+app.use(historyFallback())
+
 // 配置静态资源目录 (假设客户端文件存放在 ../client/build 目录)
 app.use(serve('../client/dist'));
 
@@ -43,10 +45,6 @@ app.use(async (ctx, next) => {
 //  注册路由
 app.use(router.routes());      
 app.use(router.allowedMethods()); 
-app.use(historyFallback({
-  index: '/index.html'
-}))
-
 //  启动服务器
 app.listen(3001, () => {
   console.log('Server is running on http://localhost:3001');
