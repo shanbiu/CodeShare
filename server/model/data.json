@@ -97,7 +97,7 @@
       "expire_at": null,
       "markdown": "# 测试 Markdown 代码块复制功能\n\n以下是一些代码块，可以测试复制功能：\n另外这里有超级多的标签\n## JavaScript 示例\n\n```javascript\nconsole.log(\"Hello, World!\");\n```\n\n## python示例\n```python\nprint(\"Hello, World!\")\n```\n## java示例\n\n```java\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, World!\");\n    }\n}\n```",
       "isPublic": true,
-      "password": ""
+      "password": null
     },
     {
       "id": "EIroeu",

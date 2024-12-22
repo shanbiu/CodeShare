@@ -70,11 +70,13 @@ const ShareCard: React.FC<ShareCardProps> = ({
     { label: "1周", value: dayjs().add(1, "week") },
     { label: "1月", value: dayjs().add(1, "month") },
   ];
+  // 端口号
+  const currentPort = window.location.port;
 
   // 复制 ID 的处理函数，复制完整链接
   const copyToClipboard = (e: React.MouseEvent) => {
     e.stopPropagation(); // 阻止事件冒泡
-    const linkToCopy = `http://localhost:3000/code/${id}${
+    const linkToCopy = `http://localhost:${currentPort}/code/${id}${
       generatedPassword ? `?pw=${generatedPassword}` : ""
     }`;
     navigator.clipboard
@@ -122,7 +124,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
     <div className="flex flex-col gap-2 m-5">
       <div>
         <Input
-          value={`http://localhost:3000/code/${id}${
+          value={`http://localhost:${currentPort}/code/${id}${
             generatedPassword ? `?pw=${generatedPassword}` : ""
           }`}
           readOnly
