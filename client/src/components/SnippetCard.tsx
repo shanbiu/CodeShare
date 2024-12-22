@@ -12,6 +12,15 @@ import MarkdownIt from 'markdown-it';
 import markdownItUnderline from 'markdown-it-underline'; // 引入下划线插件
 import Clipboard from 'clipboard'; // 用于处理复制
 
+import hljs from 'highlight.js/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
+import python from 'highlight.js/lib/languages/python';
+import java from 'highlight.js/lib/languages/java';
+// Then register the languages you need
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('python', python);
+hljs.registerLanguage('java', java);
+
 interface Snippet {
   key: string;
   title: string;
@@ -70,35 +79,55 @@ const SnippetCard: React.FC<SnippetCardProps> = ({ snippetData, handleCopy, hand
     const code = token.content;
     const language = token.info.trim();
 
-    // 需要确保缩进和代码内容的正确显示
+    const highlightedCode = hljs.highlight(
+      `${code}`,
+      { language: `${language}` }
+    ).value;
+  
+    
+
     return `
-      <div class="code-container" style="position: relative; margin-bottom: 16px;">
-        <button class="copy-btn" data-clipboard-text="${encodeURIComponent(code)}" style="position: absolute; top: 8px; right: 8px;">复制</button>
-        <pre style="background-color: #f5f5f5; padding: 16px; border-radius: 4px;">
-          <code class="language-${language}">${code}</code>
-        </pre>
-      </div>
+<div class="relative mb-4">
+  <button data-copy-content="${encodeURIComponent(code)}" class=" absolute top-3 right-3 bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600">
+    复制
+  </button>
+  <pre class="!text-indent-0  bg-gray-100 dark:bg-gray-800 p-4 rounded-md">${highlightedCode}</pre>
+</div>
+
     `;
   };
+
+
 
   // 渲染 Markdown 内容
   const renderedMarkdown = md.render(snippetData.markdown);
 
   useEffect(() => {
-    // 初始化 Clipboard.js
-    const clipboard = new Clipboard('.copy-btn');
-    clipboard.on('success', (e) => {
-      alert('复制成功!');
-      e.clearSelection();
-    });
-    clipboard.on('error', (e) => {
-      alert('复制失败，请手动复制!');
-    });
-
-    // 清理 Clipboard 实例
+  const copyToClipboard = (e: Event) => {
+    e.stopPropagation(); // 阻止事件冒泡
+    const target = e.target as HTMLElement;
+    if(target){
+      const linkToCopy = `${target.getAttribute('data-copy-content')}`;
+      navigator.clipboard
+        .writeText(decodeURIComponent(linkToCopy))
+        .then(() => {
+        alert('复制成功!');
+        })
+        .catch(() => {
+        alert('复制失败，请手动复制!');
+        });
+    }
+  };
+  const coptBtn = document.querySelectorAll('[data-copy-content]');
+  coptBtn.forEach((btn) => {
+    btn.addEventListener('click', copyToClipboard);
+  })
     return () => {
-      clipboard.destroy();
-    };
+      // 清理 Clipboard.js
+      coptBtn.forEach((btn) => {
+        btn.removeEventListener('click', copyToClipboard);
+      });
+    }
   }, []);
 
   // 生成 Tabs 项数据
@@ -152,10 +181,12 @@ const SnippetCard: React.FC<SnippetCardProps> = ({ snippetData, handleCopy, hand
       />
 
       {/* 渲染 Markdown 内容 */}
-      <div
-        className='mb-4'
-        dangerouslySetInnerHTML={{ __html: renderedMarkdown }}
+      
+
+      
+      <div className='markdown mb-4' dangerouslySetInnerHTML={{ __html: renderedMarkdown }}
       />
+
 
       {/* 使用新版 Tabs，使用 items 来渲染 Tab */}
       <Tabs type="card" defaultActiveKey={snippetData.snippets[0].key} items={tabItems} />

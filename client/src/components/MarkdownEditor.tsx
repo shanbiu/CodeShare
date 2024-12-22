@@ -67,7 +67,6 @@ export function MarkdownEditor({ markdown, setMarkdown }: MarkdownEditorProps) {
     { title: "标题", icon: <span className="font-bold text-base">H</span>, action: () => insertMarkdown("# ") },
     { title: "加粗", icon: <BoldOutlined />, action: () => insertMarkdown("**", "**") },
     { title: "斜体", icon: <ItalicOutlined />, action: () => insertMarkdown("*", "*") },
-    { title: "下划线", icon: <UnderlineOutlined />, action: () => insertMarkdown("__", "__") }, // 使用 Markdown 语法实现下划线
     { title: "删除线", icon: <StrikethroughOutlined />, action: () => insertMarkdown("~~", "~~") },
     { title: "有序列表", icon: <OrderedListOutlined />, action: () => insertMarkdown("1. ") },
     { title: "无序列表", icon: <UnorderedListOutlined />, action: () => insertMarkdown("- ") },
@@ -137,7 +136,7 @@ export function MarkdownEditor({ markdown, setMarkdown }: MarkdownEditorProps) {
           />
         </div>
         <div
-          className="border overflow-auto h-60 p-4 border-neutral-200 dark:border-neutral-800"
+          className="markdown border overflow-auto h-60 p-4 border-neutral-200 dark:border-neutral-800"
           dangerouslySetInnerHTML={{ __html: md.render(markdown) }}
         />
       </div>

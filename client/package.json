@@ -17,6 +17,7 @@
     "antd": "^5.22.4",
     "axios": "^1.7.9",
     "clipboard": "^2.0.11",
+    "highlight.js": "^11.11.0",
     "intd": "^0.1.4",
     "markdown-it": "^14.1.0",
     "markdown-it-underline": "^1.0.1",

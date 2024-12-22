@@ -55,54 +55,26 @@
       "password": "ibsemk"
     },
     {
-      "id": "eoH0W0",
-      "title": "异步函数示例",
-      "snippets": [
-        {
-          "key": "pCACb1",
-          "language": "javascript",
-          "title": "异步函数",
-          "code": ""
-        }
-      ],
-      "tags": [
-        "JavaScript",
-        "Python",
-        "HTML"
-      ],
-      "create_at": "2024-12-18 15:53:10",
-      "expire_at": 1737509899000,
-      "markdown": "**你好，世界！**",
-      "isPublic": true,
-      "password": null
-    },
-    {
-      "id": "VsvC9I",
-      "title": "代码片段",
-      "snippets": [
-        {
-          "key": "CZcFZk",
-          "language": "javascript",
-          "title": "代码块",
-          "code": "//请输入你的代码"
-        }
-      ],
-      "tags": [],
-      "create_at": "2024-12-21 12:44:07",
-      "expire_at": null,
-      "markdown": "**你好，世界！**",
-      "isPublic": true,
-      "password": null
-    },
-    {
       "id": "78DYO8",
-      "title": "代码标题",
+      "title": "测试markdown组件",
       "snippets": [
         {
           "key": "PlkeR",
           "language": "javascript",
-          "title": "代码块",
-          "code": "//测试markdown 的代码部分"
+          "title": "卡片1",
+          "code": "//测试markdown 的组件\r\nconsole.log(\"Hello, World!\");"
+        },
+        {
+          "key": "cf8fa2c1-f05b-44e9-a26d-680ccd683431",
+          "language": "python",
+          "title": "卡片2",
+          "code": "//请输入你的代码\r\nprint(\"Hello, World!\")"
+        },
+        {
+          "key": "a65fb0d6-7018-4ee2-becb-41d2c0d3db31",
+          "language": "java",
+          "title": "卡片3",
+          "code": "//请输入你的代码\r\npublic class Main {\r\n    public static void main(String[] args) {\r\n        System.out.println(\"Hello, World!\");\r\n    }\r\n}"
         }
       ],
       "tags": [
@@ -111,13 +83,14 @@
         "HTML",
         "JavaScript",
         "Java",
-        "C++"
+        "C++",
+        "设计模式"
       ],
-      "create_at": "2024-12-22 11:31:50",
+      "create_at": "2024-12-22 16:56:22",
       "expire_at": null,
-      "markdown": "# 测试 Markdown 代码块复制功能\n\n以下是一些代码块，可以测试复制功能：\n\n## JavaScript 示例\n\n```javascript\nconsole.log(\"Hello, World!\");\n```",
-      "isPublic": true,
-      "password": ""
+      "markdown": "# 测试 Markdown 代码块复制功能\n\n以下是一些代码块，可以测试复制功能：\n\n## JavaScript 示例\n\n```javascript\nconsole.log(\"Hello, World!\");\n```\n\n## python示例\n```python\nprint(\"Hello, World!\")\n```\n## java示例\n\n```java\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, World!\");\n    }\n}\n```",
+      "isPublic": false,
+      "password": "fk7y"
     },
     {
       "id": "2FAnSD",
@@ -136,6 +109,28 @@
       "markdown": "**你好，世界！**\n# 111\n**111**\n*222*\n<u>333</u>\n~~444~~",
       "isPublic": true,
       "password": ""
+    },
+    {
+      "id": "EIroeu",
+      "title": "markdown样式展示",
+      "snippets": [
+        {
+          "key": "BkTgcdSf",
+          "language": "javascript",
+          "title": "代码块",
+          "code": "//请输入你的代码"
+        }
+      ],
+      "tags": [
+        "作业",
+        "HTML",
+        "设计模式"
+      ],
+      "create_at": "2024-12-22 18:51:36",
+      "expire_at": null,
+      "markdown": "# Markdown标题\n**加粗**\n*斜体*\n~~删除~~\n[百度首页链接](www.baidu.com)\ntailwind覆盖了样式,本项目css补充复原了部分样式.\n- 无序列表\n- 内容1\n- 内容2\n- 内容3\n1. 有序列表\n2. 内容1\n3. 内容2\n4. 内容3\n```javascript\nconsole.log(\"helloword\")\n```",
+      "isPublic": false,
+      "password": "0VgS"
     }
   ]
 }

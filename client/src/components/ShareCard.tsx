@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {  Button,  Input,  Popover,  message,  Tooltip,  Select,  DatePicker,  Space,} from "antd";
+import { Button, Input, Popover, message, Tooltip, Select, DatePicker, Space } from "antd";
 import { CopyOutlined, QrcodeOutlined } from "@ant-design/icons";
 import randomPassword from "./randomPassword";
 import axios from "axios";
@@ -21,13 +21,9 @@ const ShareCard: React.FC<ShareCardProps> = ({
   fetchData,
 }) => {
   const [inputValue, setInputValue] = useState(id);
-  const [generatedPassword, setGeneratedPassword] = useState<string | null>(password|| null);
-  const [expireAt, setExpireAt] = useState<any>(
-    expire_at ? dayjs(expire_at) : null
-  ); // 使用 day.js 处理过期时间
-  const [shareStatus, setShareStatus] = useState(
-    isPublic ? "public" : "private"
-  ); // 默认分享状态
+  const [generatedPassword, setGeneratedPassword] = useState<string | null>(password || null);
+  const [expireAt, setExpireAt] = useState<any>(expire_at ? dayjs(expire_at) : null); // 使用 day.js 处理过期时间
+  const [shareStatus, setShareStatus] = useState(isPublic ? "public" : "private"); // 默认分享状态
 
   // 更新分享范围
   const handleShareStatusChange = async (value: string) => {
@@ -77,13 +73,16 @@ const ShareCard: React.FC<ShareCardProps> = ({
     { label: "1月", value: dayjs().add(1, "month") },
   ];
 
-  // 复制 ID 的处理函数
+  // 复制 ID 的处理函数，复制完整链接
   const copyToClipboard = (e: React.MouseEvent) => {
     e.stopPropagation(); // 阻止事件冒泡
+    const linkToCopy = `http://localhost:3000/code/${id}${
+      generatedPassword ? `?pw=${generatedPassword}` : ""
+    }`;
     navigator.clipboard
-      .writeText(inputValue)
+      .writeText(linkToCopy)
       .then(() => {
-        message.success("ID 已复制到剪贴板");
+        message.success("链接已复制到剪贴板");
       })
       .catch(() => {
         message.error("复制失败，请重试");
@@ -91,12 +90,10 @@ const ShareCard: React.FC<ShareCardProps> = ({
   };
 
   // 假设二维码内容就是 ID
-  const qrCodeContent = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
-    inputValue
-  )}&size=100x100`;
+  const qrCodeContent = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(inputValue)}&size=100x100`;
 
   // 提交过期时间
-  const handleExpireTimeChange = async (id: string, password: string| null, newExpireAt: any| null) => {
+  const handleExpireTimeChange = async (id: string, password: string | null, newExpireAt: any | null) => {
     if (!newExpireAt) {
       newExpireAt = null;  // 或者传递一个特定值，比如 `null` 表示永久有效
     }
@@ -124,6 +121,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
       message.error("更新过期时间失败");
     }
   };
+
   return (
     <div className="flex flex-col gap-2 m-5">
       <div>
@@ -151,7 +149,6 @@ const ShareCard: React.FC<ShareCardProps> = ({
           <Button
             icon={<QrcodeOutlined />}
             type="text"
-            // onClick={(e) => e.stopPropagation()} // 阻止事件冒泡
           />
         </Popover>
       </div>
@@ -205,11 +202,9 @@ const ShareCard: React.FC<ShareCardProps> = ({
           showTime
           value={expireAt}
           placeholder={expire_at ? "选择过期时间" : "不填, 永久有效"}
-          onChange={(date, dateString) =>{
-            handleExpireTimeChange(id, generatedPassword, date)
-          }
-      
-          } // 使用箭头函数来延迟调用
+          onChange={(date, dateString) => {
+            handleExpireTimeChange(id, generatedPassword, date);
+          }}
           onClick={(e) => e.stopPropagation()}
           renderExtraFooter={() => (
             <div>
