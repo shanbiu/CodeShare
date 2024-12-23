@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Input,
@@ -37,18 +37,18 @@ const ShareCard: React.FC<ShareCardProps> = ({
   ); // 使用 day.js 处理过期时间
   const [shareStatus, setShareStatus] = useState(
     isPublic ? "public" : "private"
-  ); 
+  );
 
   // 更新分享范围
   const handleShareStatusChange = async (value: string) => {
-    const newShareStatus = value === "public"; 
+    const newShareStatus = value === "public";
     setShareStatus(value);
     try {
       if (newShareStatus) {
         // 加密，带上当前密码
         const response = await axios.patch(`/api/updatePublic/${id}`, {
           isPublic: !newShareStatus,
-          password: generatedPassword, 
+          password: generatedPassword,
         });
 
         if (response.data.success) {
@@ -56,11 +56,10 @@ const ShareCard: React.FC<ShareCardProps> = ({
           fetchData(id);
         }
       } else {
-        
         const newPassword = UniqueCode();
         const response = await axios.patch(`/api/updatePublic/${id}`, {
           isPublic: !newShareStatus,
-          password: newPassword, 
+          password: newPassword,
         });
         if (response.data.success) {
           setGeneratedPassword(newPassword); // 更新密码状态
@@ -72,6 +71,10 @@ const ShareCard: React.FC<ShareCardProps> = ({
       alert("加密失败");
     }
   };
+  useEffect(() => {
+    setGeneratedPassword(password || null);
+    setExpireAt(expire_at ? dayjs(expire_at) : null);
+  }, [password, expireAt, id, fetchData]); // 当密码或过期时间变化时触发
 
   // 快捷选择过期时间
   const quickDates = [
@@ -104,7 +107,9 @@ const ShareCard: React.FC<ShareCardProps> = ({
 
   // 二维码内容
   const qrCodeContent = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
-    `http://localhost:${currentPort}/code/${id}${generatedPassword ? `?pw=${generatedPassword}` : ""}`
+    `http://localhost:${currentPort}/code/${id}${
+      generatedPassword ? `?pw=${generatedPassword}` : ""
+    }`
   )}&size=100x100`;
 
   // 提交过期时间
@@ -120,17 +125,17 @@ const ShareCard: React.FC<ShareCardProps> = ({
     // 格式化日期
     const formattedExpireAt = newExpireAt
       ? dayjs(newExpireAt).format("YYYY-MM-DD HH:mm:ss")
-      : null; 
+      : null;
     try {
       const response = await axios.patch(`/api/updateExpiration/${id}`, {
         password,
-        expire_at: formattedExpireAt, 
+        expire_at: formattedExpireAt,
       });
 
       if (response.data.success) {
         message.success("过期时间已更新");
         const pw = password ? password : undefined;
-        fetchData(id, pw); 
+        fetchData(id, pw);
       } else {
         message.error("更新过期时间失败");
       }
@@ -161,7 +166,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
           title={<></>}
           trigger="hover"
           placement="left"
-          overlayStyle={{ maxWidth: "128px" }} 
+          overlayStyle={{ maxWidth: "128px" }}
         >
           <Button icon={<QrcodeOutlined />} type="text" />
         </Popover>
@@ -196,7 +201,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
                 type="link"
                 onClick={() => {
                   const newPassword = UniqueCode();
-                  setGeneratedPassword(newPassword); 
+                  setGeneratedPassword(newPassword);
                 }}
               >
                 生成密码
@@ -230,7 +235,7 @@ const ShareCard: React.FC<ShareCardProps> = ({
                     size="small"
                     onClick={(e) => {
                       e.stopPropagation(); // 阻止事件冒泡
-                    
+
                       handleExpireTimeChange(
                         id,
                         generatedPassword,

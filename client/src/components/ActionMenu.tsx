@@ -99,7 +99,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({
         });
         if (response.data.success) {
           alert("取消加密成功");
-          fetchData(id);
+          fetchData(id,"");
         }
       } else {
         // 加密请求，提交新生成的密码
